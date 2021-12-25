@@ -7,17 +7,16 @@ import { faBell, faDollarSign, faChartPie, faChartBar, faList } from '@fortaweso
 
 
 
-export default function Header() {
-console.log("styles:",styles)
-    const [pageActive, setPageActive] = React.useState(1)
+export default function Header(props) {
+    const { pageActive, setPageActive } = props;
 
-    function renderButton(label, icon, indexPage = 1) {
+    function renderButton(label, icon, page = 'balance') {
         const width = (Dimensions.get('window').width - 120) / 4;
         const height = width;
     
         return (
             <TouchableOpacity
-                onPress={() => { setPageActive(indexPage) }}
+                onPress={() => { setPageActive(page) }}
                 style={{
                     flex: 1,
                     flexDirection: 'column',
@@ -33,7 +32,7 @@ console.log("styles:",styles)
                     backgroundColor: COLORS.white,
                     ...styles.shadow,
                     borderBottomWidth: 3,
-                    borderBottomColor: indexPage === pageActive ? COLORS.secondary : 'transparent',
+                    borderBottomColor: page === pageActive ? COLORS.secondary : 'transparent',
                 }}>
                 <FontAwesomeIcon icon={icon} size={35} color={COLORS.secondary} />
                 <View style={{ width: '100%', minHeight: 27, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
@@ -44,7 +43,9 @@ console.log("styles:",styles)
     }
 
     return (
-        <View style={{ paddingHorizontal: SIZES.padding, backgroundColor: COLORS.white }}>
+        <View style={{ 
+            paddingHorizontal: SIZES.padding, 
+            backgroundColor: '#40c1f5' }}>
             <View style={{
                 flexDirection: 'row',
                 marginTop: 0,
@@ -71,23 +72,23 @@ console.log("styles:",styles)
                         />
                     </View>
                     <View style={{ marginLeft: 10 }}>
-                        <Text style={{ color: COLORS.primary, ...FONTS.h2 }}>My Finance</Text>
-                        <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>Luiz Carlos</Text>
+                        <Text style={{ color: COLORS.white, ...FONTS.h2 }}>My Finance</Text>
+                        <Text style={{ ...FONTS.body3, color: COLORS.white }}>Luiz Carlos</Text>
                     </View>
                 </View>
                 <View>
-                    <FontAwesomeIcon icon={faBell} size={25} color={COLORS.primary} />
+                    <FontAwesomeIcon icon={faBell} size={25} color={COLORS.white} />
                 </View>
             </View>
             <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 20, marginBottom: 0, }}>
-                <Text style={{ ...FONTS.h4, color: COLORS.darkgray }}>Saldo do mês</Text>
-                <Text style={{ color: COLORS.primary, ...FONTS.h1 }}>R$ 7.654,32</Text>
+                <Text style={{ ...FONTS.h4, color: COLORS.white }}>Saldo do mês</Text>
+                <Text style={{ color: COLORS.white, ...FONTS.h1 }}>R$ 7.654,32</Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 25, marginBottom: 15, }}>
-                {renderButton('Saldo', faDollarSign, 1)}
-                {renderButton('Categorias', faChartPie, 2)}
-                {renderButton('Histórico', faList, 4)}
-                {renderButton('Fluxo De Caixa', faChartBar, 3)}
+                {renderButton('Saldo', faDollarSign, 'balance')}
+                {renderButton('Categorias', faChartPie, 'categories')}
+                {renderButton('Histórico', faList, 'historic')}
+                {renderButton('Fluxo De Caixa', faChartBar, 'DFC')}
             </View>
         </View>
     )

@@ -20,23 +20,32 @@ import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../c
 
 const Home = () => {
     // dummy data
-   
+    const [pageActive, setPageActive] = React.useState('categories')
 
     return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightGray2 }}>
-                <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
+        <>
+            <SafeAreaView style={{ flex: 0, backgroundColor: '#40c1f5' }} />
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#40c1f5' }}>
+                <ScrollView contentContainerStyle={{}}>
                     {/* Nav bar section */}
                     {/* <NavBar/> */}
 
-                    
                     {/* Header section */}
-                    <Header/>
+                    <Header 
+                    pageActive={pageActive}
+                    setPageActive={setPageActive}
+                    />
 
                     {/* BodyApp Section */}
-                    <BodyApp/>
-                    
+                    <BodyApp 
+                    pageActive={pageActive}
+                    />
+
                 </ScrollView>
-        </SafeAreaView>
+            </SafeAreaView>
+            <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.white }} />
+        </>
+
     )
 }
 
