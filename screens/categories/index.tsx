@@ -1,224 +1,16 @@
 import React, { useRef } from "react";
-import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar,
-    Image,
-    ImageBackground,
-    TouchableOpacity,
-    FlatList,
-    Animated,
-    Platform,
-    Dimensions,
-} from 'react-native';
+import { Container } from "./styles";
+import { Text, View, TouchableOpacity, Image, FlatList, Animated, Platform } from 'react-native';
 import { VictoryPie } from 'victory-native';
-
 import { Svg } from 'react-native-svg';
+import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../constants';
 
-import { COLORS, FONTS, SIZES, icons, images, categories } from '../constants';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faBell, faDollarSign, faChartPie, faChartBar, faList } from '@fortawesome/free-solid-svg-icons'
-
-const Home = () => {
-    console.log('categories:',categories)
-    // dummy data
-
+export default function Categories(props) {
     const categoryListHeightAnimationValue = useRef(new Animated.Value(115)).current;
-
     const [categoryList, setCategoryList] = React.useState(categories.categories)
     const [viewMode, setViewMode] = React.useState("chart")
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [showMoreToggle, setShowMoreToggle] = React.useState(false)
-    const [pageActive, setPageActive] = React.useState(1)
-
-    function renderNavBar() {
-        return (
-            <View
-                style={{
-                    flexDirection: 'row',
-                    height: 80,
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                    paddingHorizontal: SIZES.padding,
-                    backgroundColor: COLORS.white,
-                }}
-            >
-                <TouchableOpacity
-                    style={{ justifyContent: 'center', width: 50, }}
-                    onPress={() => console.log('Go Back')}
-                >
-                    <Image
-                        source={icons.back_arrow}
-                        style={{
-                            width: 30,
-                            height: 30,
-                            tintColor: COLORS.primary
-                        }}
-                    />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={{ justifyContent: 'center', alignItems: 'flex-end', width: 50 }}
-                    onPress={() => console.log('More')}
-                >
-                    <Image
-                        source={icons.more}
-                        style={{
-                            width: 30,
-                            height: 30,
-                            tintColor: COLORS.primary
-                        }}
-                    />
-                </TouchableOpacity>
-            </View>
-        )
-    }
-
-    function renderButton(label, icon, indexPage = 1) {
-        const width = (Dimensions.get('window').width - 120) / 4;
-        const height = width;
-
-        return (
-            <TouchableOpacity
-                onPress={() => { setPageActive(indexPage) }}
-                style={{
-                    flex: 1,
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    paddingVertical: 5,
-                    paddingHorizontal: 5,
-                    paddingTop: 10,
-                    margin: 5,
-                    minWidth: width,
-                    minHeight: height,
-                    borderRadius: 5,
-                    backgroundColor: COLORS.white,
-                    ...styles.shadow,
-                    borderBottomWidth: 3,
-                    borderBottomColor: indexPage === pageActive ? COLORS.secondary : 'transparent',
-                }}>
-                <FontAwesomeIcon icon={icon} size={35} color={COLORS.secondary} />
-                <View style={{ width: '100%', minHeight: 27, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{ fontSize: 11, minWidth: 30, marginTop: 3, textAlign: 'center', width: '100%' }}>{label}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
-
-    function renderHeader() {
-        return (
-            <View style={{ paddingHorizontal: SIZES.padding, backgroundColor: COLORS.white }}>
-                <View style={{
-                    flexDirection: 'row',
-                    marginTop: 0,
-                    alignItems: 'center',
-                    width: '100%',
-                    justifyContent: 'space-between'
-                }}>
-                    <View style={{ flexDirection: 'row', marginTop: SIZES.padding, alignItems: 'center' }}>
-                        <View style={{
-                            backgroundColor: COLORS.lightGray,
-                            height: 45,
-                            width: 45,
-                            borderRadius: 25,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Image
-                                source={images.shake}
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    borderRadius: 40,
-                                }}
-                            />
-                        </View>
-                        <View style={{ marginLeft: 10 }}>
-                            <Text style={{ color: COLORS.primary, ...FONTS.h2 }}>My Finance</Text>
-                            <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>Luiz Carlos</Text>
-                        </View>
-                    </View>
-                    <View>
-                        <FontAwesomeIcon icon={faBell} size={25} color={COLORS.primary} />
-                    </View>
-                </View>
-                <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 20, marginBottom: 0, }}>
-                    <Text style={{ ...FONTS.h4, color: COLORS.darkgray }}>Saldo do mês</Text>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h1 }}>R$ 7.654,32</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 25, marginBottom: 15, }}>
-                    {renderButton('Saldo', faDollarSign, 1)}
-                    {renderButton('Categorias', faChartPie, 2)}
-                    {renderButton('Histórico', faList, 4)}
-                    {renderButton('Fluxo De Caixa', faChartBar, 3)}
-                </View>
-            </View>
-        )
-    }
-
-    function renderCategoryHeaderSection() {
-        return (
-            <View style={{ flexDirection: 'row', padding: SIZES.padding, justifyContent: 'space-between', alignItems: 'center' }}>
-                {/* Title */}
-                <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>CATEGORIAS</Text>
-                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>{categoryList.length} Total</Text>
-                </View>
-
-                {/* Button */}
-                <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity
-                        style={{
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: viewMode == "chart" ? COLORS.secondary : null,
-                            height: 50,
-                            width: 50,
-                            borderRadius: 25
-                        }}
-                        onPress={() => setViewMode("chart")}
-                    >
-                        <Image
-                            source={icons.chart}
-                            resizeMode="contain"
-                            style={{
-                                width: 20,
-                                height: 20,
-                                tintColor: viewMode == "chart" ? COLORS.white : COLORS.darkgray,
-                            }}
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={{
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: viewMode == "list" ? COLORS.secondary : null,
-                            height: 50,
-                            width: 50,
-                            borderRadius: 25,
-                            marginLeft: SIZES.base
-                        }}
-                        onPress={() => setViewMode("list")}
-                    >
-                        <Image
-                            source={icons.menu}
-                            resizeMode="contain"
-                            style={{
-                                width: 20,
-                                height: 20,
-                                tintColor: viewMode == "list" ? COLORS.white : COLORS.darkgray,
-                            }}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
-        )
-    }
 
     function renderCategoryList() {
         const renderItem = ({ item }) => (
@@ -409,6 +201,57 @@ const Home = () => {
         )
     }
 
+    function renderExpenseSummary() {
+        let data = processCategoryDataToDisplay()
+
+        const renderItem = ({ item }) => (
+            <TouchableOpacity
+                style={{
+                    flexDirection: 'row',
+                    height: 40,
+                    paddingHorizontal: SIZES.radius,
+                    borderRadius: 10,
+                    backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? item.color : COLORS.white
+                }}
+                onPress={() => {
+                    let categoryName = item.name
+                    setSelectCategoryByName(categoryName)
+                }}
+            >
+                {/* Name/Category */}
+                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                    <View
+                        style={{
+                            width: 20,
+                            height: 20,
+                            backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : item.color,
+                            borderRadius: 5
+                        }}
+                    />
+
+                    <Text style={{ marginLeft: SIZES.base, color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.name}</Text>
+                </View>
+
+                {/* Expenses */}
+                <View style={{ justifyContent: 'center' }}>
+                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} USD - {item.label}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+
+        return (
+            <View style={{ padding: SIZES.padding }}>
+                <FlatList
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={item => `${item.id}`}
+                />
+            </View>
+
+        )
+    }
+
+
     function processCategoryDataToDisplay() {
         // Filter expenses with "Confirmed" status
         let chartData = categoryList.map((item) => {
@@ -469,7 +312,7 @@ const Home = () => {
                         labels={(datum) => `${datum.y}`}
                         radius={({ datum }) => (selectedCategory && selectedCategory.name == datum.name) ? SIZES.width * 0.4 : SIZES.width * 0.4 - 10}
                         innerRadius={70}
-                        labelRadius={({ innerRadius }) => (SIZES.width * 0.4 + innerRadius) / 2.5}
+                        labelRadius={({ innerRadius }) => ((SIZES.width * 0.4) + innerRadius) / 2.5}
                         style={{
                             labels: { fill: "white", },
                             parent: {
@@ -553,99 +396,80 @@ const Home = () => {
 
     }
 
-    function renderExpenseSummary() {
-        let data = processCategoryDataToDisplay()
-
-        const renderItem = ({ item }) => (
-            <TouchableOpacity
-                style={{
-                    flexDirection: 'row',
-                    height: 40,
-                    paddingHorizontal: SIZES.radius,
-                    borderRadius: 10,
-                    backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? item.color : COLORS.white
-                }}
-                onPress={() => {
-                    let categoryName = item.name
-                    setSelectCategoryByName(categoryName)
-                }}
-            >
-                {/* Name/Category */}
-                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                    <View
-                        style={{
-                            width: 20,
-                            height: 20,
-                            backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : item.color,
-                            borderRadius: 5
-                        }}
-                    />
-
-                    <Text style={{ marginLeft: SIZES.base, color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.name}</Text>
-                </View>
-
-                {/* Expenses */}
-                <View style={{ justifyContent: 'center' }}>
-                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} USD - {item.label}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-
-        return (
-            <View style={{ padding: SIZES.padding }}>
-                <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={item => `${item.id}`}
-                />
-            </View>
-
-        )
-    }
 
     return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightGray2 }}>
-                <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
-                    {/* Nav bar section */}
-                    {/* {renderNavBar()} */}
+        <View style={{ flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'row', padding: SIZES.padding, justifyContent: 'space-between', alignItems: 'center' }}>
+                {/* Title */}
+                <View>
+                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>CATEGORIAS</Text>
+                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>{categoryList.length} Total</Text>
+                </View>
 
-                    {/* Header section */}
-                    {renderHeader()}
+                {/* Button */}
+                <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: viewMode == "chart" ? COLORS.secondary : null,
+                            height: 50,
+                            width: 50,
+                            borderRadius: 25
+                        }}
+                        onPress={() => setViewMode("chart")}
+                    >
+                        <Image
+                            source={icons.chart}
+                            resizeMode="contain"
+                            style={{
+                                width: 20,
+                                height: 20,
+                                tintColor: viewMode == "chart" ? COLORS.white : COLORS.darkgray,
+                            }}
+                        />
+                    </TouchableOpacity>
 
-                    {/* Category Header Section */}
-                    {renderCategoryHeaderSection()}
+                    <TouchableOpacity
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: viewMode == "list" ? COLORS.secondary : null,
+                            height: 50,
+                            width: 50,
+                            borderRadius: 25,
+                            marginLeft: SIZES.base
+                        }}
+                        onPress={() => setViewMode("list")}>
+                        <Image
+                            source={icons.menu}
+                            resizeMode="contain"
+                            style={{
+                                width: 20,
+                                height: 20,
+                                tintColor: viewMode == "list" ? COLORS.white : COLORS.darkgray,
+                            }}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={{ flexDirection: 'column' }}>
+                {
+                    viewMode == "list" &&
+                    <View>
+                        {renderCategoryList()}
+                        {renderIncomingExpenses()}
+                    </View>
+                }
+                {
+                    viewMode == "chart" &&
+                    <View>
+                        {renderChart()}
+                        {renderExpenseSummary()}
+                    </View>
+                }
+            </View>
+        </View>
 
-
-                    {
-                        viewMode == "list" &&
-                        <View>
-                            {renderCategoryList()}
-                            {renderIncomingExpenses()}
-                        </View>
-                    }
-                    {
-                        viewMode == "chart" &&
-                        <View>
-                            {renderChart()}
-                            {renderExpenseSummary()}
-                        </View>
-                    }
-                </ScrollView>
-        </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 2,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 3,
-    }
-})
-
-export default Home;
