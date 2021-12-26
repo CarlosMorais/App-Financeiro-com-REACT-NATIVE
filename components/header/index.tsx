@@ -73,7 +73,7 @@ export default function Header(props) {
                             />
                         </View>
                         <View style={{ marginLeft: 10 }}>
-                            <Text style={{ color: COLORS.white, ...FONTS.h2 }}>My Finance</Text>
+                            <Text style={{ color: COLORS.white, ...FONTS.h2 }}>Controle Financeiro</Text>
                             <Text style={{ ...FONTS.body3, color: COLORS.white }}>Luiz Carlos</Text>
                         </View>
                     </View>
@@ -88,7 +88,7 @@ export default function Header(props) {
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 25, marginBottom: 15, }}>
                     {renderButton('Saldo', faDollarSign, 'balance')}
                     {renderButton('Categorias', faChartPie, 'categories')}
-                    {renderButton('Histórico', faList, 'historic')}
+                    {renderButton('Histórico', faList, 'history')}
                     {renderButton('Fluxo De Caixa', faChartBar, 'DFC')}
                 </View>
         </View>

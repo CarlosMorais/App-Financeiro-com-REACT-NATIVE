@@ -23,7 +23,7 @@ const Home = () => {
 
     return (
         <ImageBackground source={images.bgHeader} resizeMode="cover" style={styles.imageBgHeader}>
-            <ScrollView contentContainerStyle={{ minHeight: SIZES.height * 1.5}}>
+            <ScrollView contentContainerStyle={{ minHeight: SIZES.height * 1.25}}>
                 <SafeAreaView style={{ flex: 0 }} />
                 <SafeAreaView style={{ flex: 1 }}>
 

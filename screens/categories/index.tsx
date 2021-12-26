@@ -429,7 +429,7 @@ export default function Categories(props) {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 {/* Title */}
                 <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>CATEGORIAS</Text>
+                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>CATEGORIAS EM {new Date().getMonth() + 1}/{new Date().getFullYear()}</Text>
                     <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>{categoryList.length} Total</Text>
                 </View>
 
