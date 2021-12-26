@@ -15,7 +15,7 @@ export const categories = [
         id: 1,
         name: "Educação",
         icon: education,
-        color: COLORS.yellow,
+        color: COLORS.darkgreen,
         expenses: [
             {
                 id: 1,
@@ -81,7 +81,7 @@ export const categories = [
         id: 3,
         name: "Filhos",
         icon: baby_car,
-        color: COLORS.darkgreen,
+        color: COLORS.yellow,
         expenses: [
             {
                 id: 7,

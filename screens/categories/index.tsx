@@ -1,29 +1,36 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Container } from "./styles";
-import { Text, View, TouchableOpacity, Image, FlatList, Animated, Platform } from 'react-native';
+import { Text, View, TouchableOpacity, Image, ScrollView, Animated, Platform } from 'react-native';
 import { VictoryPie } from 'victory-native';
 import { Svg } from 'react-native-svg';
 import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../constants';
 
 export default function Categories(props) {
-    const categoryListHeightAnimationValue = useRef(new Animated.Value(115)).current;
+    const categoryListHeightAnimationValue = useRef(new Animated.Value(69)).current;
     const [categoryList, setCategoryList] = React.useState(categories.categories)
     const [viewMode, setViewMode] = React.useState("chart")
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [showMoreToggle, setShowMoreToggle] = React.useState(false)
 
+    useEffect(() => {
+        selectedCategory == null && setSelectCategoryByName(null);
+    }, []);
+
     function renderCategoryList() {
-        const renderItem = ({ item }) => (
+
+        const renderItem = ( item, index ) => (
             <TouchableOpacity
+                key={'renderCategoryList' + index}
                 onPress={() => setSelectedCategory(item)}
                 style={{
-                    flex: 1,
                     flexDirection: 'row',
-                    margin: 5,
+                    margin: '1%',
+                    marginBottom: 7,
                     paddingVertical: SIZES.radius,
                     paddingHorizontal: SIZES.padding,
                     borderRadius: 5,
                     backgroundColor: COLORS.white,
+                    width: '48%',
                     ...styles.shadow
                 }}
             >
@@ -41,31 +48,35 @@ export default function Categories(props) {
 
         return (
             <View style={{ paddingHorizontal: SIZES.padding - 5 }}>
-                <Animated.View style={{ height: categoryListHeightAnimationValue }}>
-                    <FlatList
-                        data={categoryList}
-                        renderItem={renderItem}
-                        keyExtractor={item => `${item.id}`}
-                        numColumns={2}
-                    />
+                <Animated.View style={{ height: categoryListHeightAnimationValue,
+                flexDirection: 'row', flexWrap: 'wrap',}}>
+                    {categoryList && categoryList.length && categoryList.map((item, index)=>{
+                        return renderItem(item, index)
+                    })}
                 </Animated.View>
 
                 <TouchableOpacity
                     style={{
                         flexDirection: 'row',
                         marginVertical: SIZES.base,
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: 45,
+                        backgroundColor: '#fff',
+                        height: 50,
+                        marginHorizontal: -5,
+                        marginBottom: -0,
                     }}
                     onPress={() => {
                         if (showMoreToggle) {
                             Animated.timing(categoryListHeightAnimationValue, {
-                                toValue: 115,
+                                toValue: 69,
                                 duration: 500,
                                 useNativeDriver: false
                             }).start()
                         } else {
                             Animated.timing(categoryListHeightAnimationValue, {
-                                toValue: 172.5,
+                                toValue: 125,
                                 duration: 500,
                                 useNativeDriver: false
                             }).start()
@@ -98,8 +109,10 @@ export default function Categories(props) {
         let allExpenses = selectedCategory ? selectedCategory.expenses : []
         let incomingExpenses = allExpenses.filter(a => a.status == "P")
 
-        const renderItem = ({ item, index }) => (
-            <View style={{
+        const renderItem = ( item, index ) => (
+            <View 
+            key={'renderIncomingExpenses' + index}
+            style={{
                 width: 300,
                 marginRight: SIZES.padding,
                 marginLeft: index == 0 ? SIZES.padding : 0,
@@ -178,16 +191,13 @@ export default function Categories(props) {
             <View>
                 {renderIncomingExpensesTitle()}
 
-                {
-                    incomingExpenses.length > 0 &&
-                    <FlatList
-                        data={incomingExpenses}
-                        renderItem={renderItem}
-                        keyExtractor={item => `${item.id}`}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                    />
-                }
+                <ScrollView style={{width: '100%', flexDirection: 'row'}} horizontal={true}>
+                    <View style={{minWidth: '105%', flexDirection: 'row'}}>
+                        {incomingExpenses && incomingExpenses.length && incomingExpenses.map((item, index)=>{
+                            return renderItem(item, index)
+                        })}
+                    </View>
+                </ScrollView>
 
                 {
                     incomingExpenses.length == 0 &&
@@ -204,8 +214,9 @@ export default function Categories(props) {
     function renderExpenseSummary() {
         let data = processCategoryDataToDisplay()
 
-        const renderItem = ({ item }) => (
+        const renderItem = ( item , index) => (
             <TouchableOpacity
+                key={'renderExpenseSummary' + index}
                 style={{
                     flexDirection: 'row',
                     height: 40,
@@ -241,11 +252,9 @@ export default function Categories(props) {
 
         return (
             <View style={{ padding: SIZES.padding }}>
-                <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={item => `${item.id}`}
-                />
+                {data && data.length && data.map((item, index)=>{
+                    return renderItem(item, index)
+                })}
             </View>
 
         )
@@ -290,7 +299,7 @@ export default function Categories(props) {
     }
 
     function setSelectCategoryByName(name) {
-        let category = categoryList.filter(a => a.name == name)
+        let category = name === null ? categoryList : categoryList.filter(a => a.name == name)
         setSelectedCategory(category[0])
     }
 
@@ -299,9 +308,6 @@ export default function Categories(props) {
         let chartData = processCategoryDataToDisplay()
         let colorScales = chartData.map((item) => item.color)
         let totalExpenseCount = chartData.reduce((a, b) => a + (b.expenseCount || 0), 0)
-
-        console.log("Check Chart")
-        console.log(chartData)
 
         if (Platform.OS == 'ios') {
             return (
@@ -396,10 +402,31 @@ export default function Categories(props) {
 
     }
 
+    function renderContent(viewMode){
+        switch(viewMode){
+            case 'list':
+                return (
+                    <View>
+                        {renderCategoryList()}
+                        {renderIncomingExpenses()}
+                    </View>
+                )
+            case 'chart':
+                return (
+                    <View>
+                        {renderChart()}
+                        {renderExpenseSummary()}
+                    </View>
+                )
+            default:
+                return <></>;
+        }
+    }
+
 
     return (
         <View style={{ flexDirection: 'column' }}>
-            <View style={{ flexDirection: 'row', padding: SIZES.padding, justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 {/* Title */}
                 <View>
                     <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>CATEGORIAS</Text>
@@ -453,21 +480,8 @@ export default function Categories(props) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{ flexDirection: 'column' }}>
-                {
-                    viewMode == "list" &&
-                    <View>
-                        {renderCategoryList()}
-                        {renderIncomingExpenses()}
-                    </View>
-                }
-                {
-                    viewMode == "chart" &&
-                    <View>
-                        {renderChart()}
-                        {renderExpenseSummary()}
-                    </View>
-                }
+            <View style={{ flexDirection: 'column', marginTop: 25, marginLeft: -20, marginRight: -20}}>
+                {renderContent(viewMode)}
             </View>
         </View>
 

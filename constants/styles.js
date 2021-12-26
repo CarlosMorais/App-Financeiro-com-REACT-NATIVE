@@ -9,5 +9,9 @@ export default StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 3,
-    }
+    },
+    imageBgHeader: {
+        flex: 1,
+        justifyContent: "center",
+    },
 })

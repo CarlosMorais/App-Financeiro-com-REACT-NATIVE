@@ -9,7 +9,6 @@ import {
     Image,
     ImageBackground,
     TouchableOpacity,
-    FlatList,
     Animated,
     Platform,
     Dimensions,
@@ -20,32 +19,35 @@ import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../c
 
 const Home = () => {
     // dummy data
-    const [pageActive, setPageActive] = React.useState('categories')
+    const [pageActive, setPageActive] = React.useState('balance')
 
     return (
-        <>
-            <SafeAreaView style={{ flex: 0, backgroundColor: '#40c1f5' }} />
-            <SafeAreaView style={{ flex: 1, backgroundColor: '#40c1f5' }}>
-                <ScrollView contentContainerStyle={{}}>
-                    {/* Nav bar section */}
-                    {/* <NavBar/> */}
+        <ImageBackground source={images.bgHeader} resizeMode="cover" style={styles.imageBgHeader}>
+            <ScrollView contentContainerStyle={{ minHeight: SIZES.height * 1.5}}>
+                <SafeAreaView style={{ flex: 0 }} />
+                <SafeAreaView style={{ flex: 1 }}>
 
-                    {/* Header section */}
-                    <Header 
-                    pageActive={pageActive}
-                    setPageActive={setPageActive}
-                    />
 
-                    {/* BodyApp Section */}
-                    <BodyApp 
-                    pageActive={pageActive}
-                    />
+                    <View>
+                        {/* Nav bar section */}
+                        {/* <NavBar/> */}
 
-                </ScrollView>
-            </SafeAreaView>
-            <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.white }} />
-        </>
+                        {/* Header section */}
+                        <Header
+                            pageActive={pageActive}
+                            setPageActive={setPageActive}
+                        />
 
+                        {/* BodyApp Section */}
+                        <BodyApp
+                            pageActive={pageActive}
+                        />
+                    </View>
+
+                </SafeAreaView>
+            </ScrollView>
+            {/* <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.white }} /> */}
+        </ImageBackground>
     )
 }
 

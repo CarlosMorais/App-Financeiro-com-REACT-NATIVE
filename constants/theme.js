@@ -7,6 +7,7 @@ export const COLORS = {
     secondary: "#FF615F",   // peach
 
     // colors
+    appTheme: '#3abd4b',
     black: "#1E1F20",
     white: "#FFFFFF",
     lightGray: "#F5F7F9",
@@ -43,7 +44,10 @@ export const SIZES = {
 
     // app dimensions
     width,
-    height
+    height,
+
+    // borderRadius
+    borderRadiusBody: 25
 };
 
 export const FONTS = {
