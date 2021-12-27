@@ -3,7 +3,7 @@ import { Container } from "./styles";
 import { Text, View, TouchableOpacity, Image, Animated, Platform } from 'react-native';
 import { VictoryPie } from 'victory-native';
 import { Svg } from 'react-native-svg';
-import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../constants';
+import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 
 export default function DFC(props) {
     const monName = new Array ("janeiro", "fevereiro", "março", "abril", "Maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro")

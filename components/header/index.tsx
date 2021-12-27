@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import { Container } from "./styles";
 import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
-import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../constants';
+import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBell, faDollarSign, faChartPie, faChartBar, faList } from '@fortawesome/free-solid-svg-icons'
+import util from "../../util";
 
 
 
@@ -47,6 +48,7 @@ export default function Header(props) {
         <View style={{
             paddingHorizontal: SIZES.padding,
             marginBottom: SIZES.borderRadiusBody + 15,
+            marginHorizontal: 0,
         }}>
             <View style={{
                     flexDirection: 'row',
@@ -55,7 +57,7 @@ export default function Header(props) {
                     width: '100%',
                     justifyContent: 'space-between'
                 }}>
-                    <View style={{ flexDirection: 'row', marginTop: SIZES.padding, alignItems: 'center' }}>
+                    <View style={{flex: 1, flexDirection: 'row', marginTop: 15, alignItems: 'center' }}>
                         <View style={{
                             height: 45,
                             width: 45,
@@ -82,8 +84,8 @@ export default function Header(props) {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 20, marginBottom: 0, }}>
-                    <Text style={{ ...FONTS.h4, color: COLORS.white }}>Saldo do mês</Text>
-                    <Text style={{ color: COLORS.white, ...FONTS.h1 }}>R$ 7.654,32</Text>
+                    <Text style={{ ...FONTS.h4, color: COLORS.white }}>Saldo Do Mês</Text>
+                    <Text style={{ color: COLORS.white, ...FONTS.h1 }}>{util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure())}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 25, marginBottom: 15, }}>
                     {renderButton('Saldo', faDollarSign, 'balance')}

@@ -10,68 +10,108 @@ import { COLORS } from "./theme";
 const confirmStatus = "C"
 const pendingStatus = "P"
 
-export const categories = [
+function totalReceipt(){
+    let total = 0;
+    receipt.map((item)=>{
+        total += item.total;
+    })
+
+    return total;
+}
+
+function totalExpenditure(){
+    let total = 0;
+    expenses.map((item)=>{
+        item.expenses.map((ex)=>{
+            total += ex.total;
+        })
+    })
+
+    return total;
+}
+
+export const receipt = [
     {
         id: 1,
-        name: "Educação",
+        name: "Salário",
+        total: 9876.54,
+    },
+    {
+        id: 2,
+        name: "Venda De Livros",
+        total: 876.54,
+    }
+];
+
+export const expenses = [
+    {
+        id: 1,
+        name: "Estudos",
         icon: education,
         color: COLORS.darkgreen,
         expenses: [
             {
                 id: 1,
-                title: "Mensalidade",
-                description: "Mensalidade",
-                location: "Avenida Paulista' tuition center",
-                total: 100.00,
+                title: "Pós-graduação",
+                description: "Pós-graduação",
+                location: "Hardward",
+                total: 1200.00,
                 status: pendingStatus
             },
             {
                 id: 2,
-                title: "Arduino",
-                description: "Hardward",
-                location: "Avenida Paulista' tuition center",
-                total: 30.00,
-                status: pendingStatus
-            },
-            {
-                id: 3,
                 title: "Livros de Javascript",
                 description: "Livros de Javascript",
                 location: "Avenida Paulista' Book Store",
-                total: 20.00,
+                total: 40.00,
+                status: confirmStatus
+            },
+            {
+                id: 3,
+                title: "Livros de PHP",
+                description: "Livros de PHP",
+                location: "Avenida Paulista' Book Store",
+                total: 30.00,
                 status: confirmStatus
             },
             {
                 id: 4,
-                title: "Livros de PHP",
-                description: "Livros de PHP",
+                title: "Livros de I.A.",
+                description: "Livros de Inteligência Artificial",
                 location: "Avenida Paulista' Book Store",
-                total: 20.00,
+                total: 120.00,
                 status: confirmStatus
             }
         ],
     },
     {
         id: 2,
-        name: "Nutrição",
+        name: "Alimentação",
         icon: food,
-        color: COLORS.lightBlue,
+        color: COLORS.blue,
         expenses: [
             {
-                id: 5,
+                id: 1,
                 title: "Vitaminas",
-                description: "Vitamina",
+                description: "Polivitamínico de A-Z",
                 location: "Avenida Paulista' Pharmacy",
-                total: 25.00,
+                total: 35.00,
                 status: pendingStatus,
             },
-
             {
-                id: 6,
-                title: "Proteína em pó",
-                description: "Proteína",
+                id: 2,
+                title: "Proteína",
+                description: "Proteína em pó",
                 location: "Avenida Paulista' Pharmacy",
-                total: 50.00,
+                total: 40.00,
+                status: confirmStatus,
+            },
+            {
+                id: 3,
+                title: "Supermercado",
+                description: "Compras de supermercado do mês",
+                location: "Avenida Paulista' Hipermarket",
+                total: 900.00,
                 status: confirmStatus,
             },
 
@@ -79,56 +119,56 @@ export const categories = [
     },
     {
         id: 3,
-        name: "Filhos",
+        name: "Transporte",
         icon: baby_car,
-        color: COLORS.yellow,
+        color: COLORS.gold,
         expenses: [
             {
-                id: 7,
-                title: "Brinquedos",
-                description: "Brinquedo",
-                location: "Avenida Paulista' Toy Store",
-                total: 25.00,
+                id: 1,
+                title: "Combustível",
+                description: "Gazolina",
+                location: "Avenida Paulista' Posto Ipiranga",
+                total: 120.00,
                 status: confirmStatus,
             },
             {
-                id: 8,
-                title: "Baby Car Seat",
-                description: "Baby Car Seat",
-                location: "Avenida Paulista' Baby Care Store",
-                total: 100.00,
-                status: pendingStatus,
+                id: 2,
+                title: "Combustível",
+                description: "Gazolina",
+                location: "Avenida Paulista' Posto Ipiranga",
+                total: 125.00,
+                status: confirmStatus,
             },
             {
-                id: 9,
-                title: "Pampers",
-                description: "Pampers",
-                location: "Avenida Paulista' Supermarket",
-                total: 100.00,
-                status: pendingStatus,
+                id: 3,
+                title: "Combustível",
+                description: "Alcool",
+                location: "Avenida Paulista' Posto Ipiranga",
+                total: 97.50,
+                status: confirmStatus,
             },
             {
-                id: 10,
-                title: "Camiseta de bebê",
-                description: "T-Shirt",
-                location: "Avenida Paulista' Fashion Store",
-                total: 20.00,
+                id: 4,
+                title: "Oficina",
+                description: "Troca de óleo",
+                location: "Avenida Paulista' Posto Ipiranga",
+                total: 250.00,
                 status: pendingStatus,
             },
         ],
     },
     {
         id: 4,
-        name: "Bem Estar",
+        name: "Saúde e Bem Estar",
         icon: healthcare,
-        color: COLORS.peach,
+        color: COLORS.purple,
         expenses: [
             {
                 id: 11,
                 title: "Skin Care",
                 description: "Skin care",
                 location: "Avenida Paulista' Pharmacy",
-                total: 10.00,
+                total: 55.00,
                 status: pendingStatus,
             },
             {
@@ -136,7 +176,7 @@ export const categories = [
                 title: "Loção",
                 description: "Loção",
                 location: "Avenida Paulista' Pharmacy",
-                total: 50.00,
+                total: 45.00,
                 status: confirmStatus,
             },
             {
@@ -144,7 +184,7 @@ export const categories = [
                 title: "Máscara falsa",
                 description: "Máscara falsa",
                 location: "Avenida Paulista' Pharmacy",
-                total: 50.00,
+                total: 45.00,
                 status: pendingStatus,
             },
             {
@@ -152,23 +192,31 @@ export const categories = [
                 title: "Creme protetor solar",
                 description: "Creme protetor solar",
                 location: "Avenida Paulista' Pharmacy",
-                total: 50.00,
+                total: 145.00,
+                status: pendingStatus,
+            },
+            {
+                id: 14,
+                title: "Remédios",
+                description: "Compra de remédios",
+                location: "Avenida Paulista' Pharmacy",
+                total: 150.00,
                 status: pendingStatus,
             },
         ],
     },
     {
         id: 5,
-        name: "Esportes",
+        name: "Outros",
         icon: sports_icon,
-        color: COLORS.purple,
+        color: COLORS.red,
         expenses: [
             {
                 id: 15,
                 title: "Associação de ginásio",
                 description: "Taxa mensal",
                 location: "Avenida Paulista' Gym",
-                total: 45.00,
+                total: 90.00,
                 status: pendingStatus,
             },
             {
@@ -176,17 +224,9 @@ export const categories = [
                 title: "Luvas",
                 description: "Equipamento de ginástica",
                 location: "Avenida Paulista' Gym",
-                total: 15.00,
+                total: 45.00,
                 status: confirmStatus,
             },
-        ],
-    },
-    {
-        id: 6,
-        name: "Roupas",
-        icon: cloth_icon,
-        color: COLORS.red,
-        expenses: [
             {
                 id: 17,
                 title: "Camiseta",
@@ -204,9 +244,12 @@ export const categories = [
                 status: confirmStatus,
             },
         ],
-    }
+    },
 ]
 
 export default {
-    categories
+    receipt,
+    expenses,
+    totalReceipt,
+    totalExpenditure,
 }

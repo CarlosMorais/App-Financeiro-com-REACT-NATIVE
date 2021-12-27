@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import Header from "../../components/header";
 import BodyApp from "../../components/bodyApp";
-import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../constants';
+import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 
 const Home = () => {
     // dummy data
@@ -23,12 +23,23 @@ const Home = () => {
 
     return (
         <ImageBackground source={images.bgHeader} resizeMode="cover" style={styles.imageBgHeader}>
-            <ScrollView contentContainerStyle={{ minHeight: SIZES.height * 1.25}}>
+            <ScrollView contentContainerStyle={{ 
+                // minHeight: SIZES.height * 1
+                }}>
                 <SafeAreaView style={{ flex: 0 }} />
-                <SafeAreaView style={{ flex: 1 }}>
+                <SafeAreaView style={{ 
+                    flex: 1, 
+                    minHeight: '100%',
+                    }}>
 
 
-                    <View>
+                    <View style={{
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        minHeight: '100%',
+                        }}>
                         {/* Nav bar section */}
                         {/* <NavBar/> */}
 

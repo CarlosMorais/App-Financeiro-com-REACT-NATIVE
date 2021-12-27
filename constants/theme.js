@@ -14,13 +14,15 @@ export const COLORS = {
     lightGray2: '#FAFBFD',
     gray: "#BEC1D2",
     blue: '#42B0FF',
+    blueGrotto: '#189AB4',
     darkgray: '#898C95',
     yellow: '#FFD573',
+    gold: '#F8D210',
     lightBlue: '#95A9B8',
     darkgreen: '#008159',
     peach: '#FF615F',
     purple: '#8e44ad',
-    red: '#FF0000',
+    red: '#F51720',
 };
 
 export const SIZES = {

@@ -2,12 +2,13 @@ import React, { useRef, useEffect } from "react";
 import { Container } from "./styles";
 import { Text, View, TouchableOpacity, Image, ScrollView, Animated, Platform } from 'react-native';
 import { VictoryPie } from 'victory-native';
+import util from '../../util';
 import { Svg } from 'react-native-svg';
-import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../constants';
+import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 
 export default function Categories(props) {
     const categoryListHeightAnimationValue = useRef(new Animated.Value(69)).current;
-    const [categoryList, setCategoryList] = React.useState(categories.categories)
+    const [categoryList, setCategoryList] = React.useState(transactions.expenses)
     const [viewMode, setViewMode] = React.useState("chart")
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [showMoreToggle, setShowMoreToggle] = React.useState(false)
@@ -182,7 +183,7 @@ export default function Categories(props) {
                         backgroundColor: selectedCategory.color,
                     }}
                 >
-                    <Text style={{ color: COLORS.white, ...FONTS.body3 }}>CONFIRM {item.total.toFixed(2)} USD</Text>
+                    <Text style={{ color: COLORS.white, ...FONTS.body3 }}>CONFIRM {util.numberFormat(item.total)}</Text>
                 </View>
             </View>
         )
@@ -245,7 +246,7 @@ export default function Categories(props) {
 
                 {/* Expenses */}
                 <View style={{ justifyContent: 'center' }}>
-                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} USD - {item.label}</Text>
+                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{util.numberFormat(item.y)} - {item.label}</Text>
                 </View>
             </TouchableOpacity>
         )

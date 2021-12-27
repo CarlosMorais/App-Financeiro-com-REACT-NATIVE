@@ -26,12 +26,16 @@ export default function BodyApp(props) {
 
     return (
         <View style={{
+            flex: 1,
+            paddingHorizontal: SIZES.padding,
+            marginBottom: SIZES.borderRadiusBody + 15,
+            backgroundColor: '#fff', 
             marginTop: (SIZES.borderRadiusBody + 5) * -1 ,
             borderTopLeftRadius: SIZES.borderRadiusBody,
             borderTopRightRadius: SIZES.borderRadiusBody,
-            backgroundColor: '#fff',
-            minHeight: '100%',
             flexDirection: 'column', 
+            width: '100%',
+            display: "flex",
             padding: SIZES.padding, 
         }}>
             {renderBody(pageActive)}
