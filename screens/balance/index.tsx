@@ -5,7 +5,7 @@ import { VictoryPie } from 'victory-native';
 import { Svg } from 'react-native-svg';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import util from '../../util';
-import BalanceChart from '../../components/balanceChart';
+import ChartBars from "../../components/chartBars";
 
 export default function Balance(props) {
     const monName = new Array ("janeiro", "fevereiro", "março", "abril", "Maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro")
@@ -24,9 +24,13 @@ export default function Balance(props) {
                 </View>
             </View>
             <View style={{flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20}}>
-                <BalanceChart 
-                Recept={transactions.totalReceipt()}
-                Expense={transactions.totalExpenditure()}
+                <ChartBars 
+                data={[
+                    {
+                        recept: transactions.totalReceipt(),
+                        expense: transactions.totalExpenditure()
+                    }
+                ]}
                 />
             </View>
         </View>

@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     padding: 5px;
-    background-color: #f9f9f9;
+    background-color: #fff;
     height: 100%;
     width: 100%;
     flex: 1;
@@ -17,15 +17,22 @@ export const Top = styled.View`
 export const BoxBars = styled.View`
     flex: 1;
     flex-direction: row;
-    margin-top: 40px;;
+    margin-top: 30px;
+`;
+
+export const BoxBarsChild = styled.View`
+    flex: 1;
+    flex-direction: row;
+    margin-top: 10px;
+    margin: 1px;
 `;
 
 export const BoxBarLeft = styled.View`
     flex: 1;
     flex-direction: column;
     align-items: flex-end;
-    margin-right: 10px;
     justify-content: flex-end;
+    margin-right: ${props => props.spaceBetweenBars || 10}px;
 `;
 
 export const BoxBarRight = styled.View`
@@ -33,15 +40,15 @@ export const BoxBarRight = styled.View`
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
-    margin-left: 10px;
+    margin-left: ${props => props.spaceBetweenBars || 10}px;
 `;
 
 export const RecipeBar = styled.View`
     background-color: blue;
     height: ${props => props.percentRecept || 100}%;
-    width: 55%;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    width: ${props => props.percentWidth || 55}%;
+    border-top-left-radius: ${props => props.barRadius || 15}px;
+    border-top-right-radius: ${props => props.barRadius || 15}px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
 `;
@@ -49,32 +56,70 @@ export const RecipeBar = styled.View`
 export const ExpenseBar = styled.View`
     background-color: red;
     height: ${props => props.percentExpense || 100}%;
-    width: 55%;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    width: ${props => props.percentWidth || 55}%;
+    border-top-left-radius: ${props => props.barRadius || 15}px;
+    border-top-right-radius: ${props => props.barRadius || 15}px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
 `;
 
 export const RecipeLabel = styled.Text`
-    font-size: 23px;
+    font-size: ${props => props.labelFontSize || 23}px;
     font-weight: bold;
     color: #065164;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    min-width: 120px;
+    text-align: right;
 `;
 
 export const ExpenseLabel = styled.Text`
-    font-size: 23px;
+    font-size: ${props => props.labelFontSize || 23}px;
     font-weight: bold;
     color: #7e2d07;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    min-width: 120px;
+    text-align: left;
 `;
 
 export const Footer = styled.View`
     display: flex; 
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-top-color: #444;
+    border-top-width: 1px;
+    width: 100%;
+    background-color: rgba(100, 100, 100, 0.1);
+`;
+
+export const LegendColor = styled.View`
+    height: 15px;
+    width: 15px;
+    align-self: center;
+    background-color: ${props => props.legendColor || 'red'};
+    margin-right: 5px;
+`;
+
+export const LegendText = styled.Text`
+    font-size: 15px;
+    color: #333;
+    margin-right: 18px;
+`;
+
+export const BoxLegend = styled.View`
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+`;
+
+export const BoxLegendChild = styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
 `;
 
 export const FooterLeft = styled.View`

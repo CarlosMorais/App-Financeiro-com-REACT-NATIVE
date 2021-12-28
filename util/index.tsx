@@ -30,9 +30,16 @@ function currencyFormat(num) {
     return number;
   }
 
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
  export default {
     currencyFormat,
     numberFormat,
     clearNumber,
     getExpense,
+    getRandomInt,
 }

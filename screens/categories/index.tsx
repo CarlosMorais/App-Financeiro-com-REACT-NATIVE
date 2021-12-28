@@ -17,6 +17,10 @@ export default function Categories(props) {
         selectedCategory == null && setSelectCategoryByName(null);
     }, []);
 
+    useEffect(() => {
+        // console.log('selectedCategory:',selectedCategory)
+    }, [selectedCategory]);
+
     function renderCategoryList() {
 
         const renderItem = ( item, index ) => (
@@ -108,11 +112,11 @@ export default function Categories(props) {
 
     function renderIncomingExpenses() {
         let allExpenses = selectedCategory ? selectedCategory.expenses : []
-        let incomingExpenses = allExpenses.filter(a => a.status == "P")
+        let incomingExpenses = allExpenses.filter(a => a.status !== "")
 
         const renderItem = ( item, index ) => (
             <View 
-            key={'renderIncomingExpenses' + index}
+            key={'renderIncomingExpenses' + index + item.id}
             style={{
                 width: 300,
                 marginRight: SIZES.padding,
@@ -217,7 +221,7 @@ export default function Categories(props) {
 
         const renderItem = ( item , index) => (
             <TouchableOpacity
-                key={'renderExpenseSummary' + index}
+                key={'renderExpenseSummary' + index + item.id}
                 style={{
                     flexDirection: 'row',
                     height: 40,
@@ -246,7 +250,7 @@ export default function Categories(props) {
 
                 {/* Expenses */}
                 <View style={{ justifyContent: 'center' }}>
-                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{util.numberFormat(item.y)} - {item.label}</Text>
+                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{util.numberFormat(transactions.totalExpensesTheCategory(item.name))} - {item.label}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -265,7 +269,7 @@ export default function Categories(props) {
     function processCategoryDataToDisplay() {
         // Filter expenses with "Confirmed" status
         let chartData = categoryList.map((item) => {
-            let confirmExpenses = item.expenses.filter(a => a.status == "C")
+            let confirmExpenses = item.expenses.filter(a => a.status !== "")
             var total = confirmExpenses.reduce((a, b) => a + (b.total || 0), 0)
 
             return {
@@ -310,6 +314,11 @@ export default function Categories(props) {
         let colorScales = chartData.map((item) => item.color)
         let totalExpenseCount = chartData.reduce((a, b) => a + (b.expenseCount || 0), 0)
 
+        function selectedCategoryTotal(selectedCategory){
+            if(selectedCategory && selectedCategory.expenses && selectedCategory.expenses.length)   
+                return util.numberFormat(transactions.totalExpensesTheCategory(selectedCategory.name))
+        }
+
         if (Platform.OS == 'ios') {
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -318,7 +327,7 @@ export default function Categories(props) {
                         data={chartData}
                         labels={(datum) => `${datum.y}`}
                         radius={({ datum }) => (selectedCategory && selectedCategory.name == datum.name) ? SIZES.width * 0.4 : SIZES.width * 0.4 - 10}
-                        innerRadius={70}
+                        innerRadius={90}
                         labelRadius={({ innerRadius }) => ((SIZES.width * 0.4) + innerRadius) / 2.5}
                         style={{
                             labels: { fill: "white", },
@@ -346,9 +355,9 @@ export default function Categories(props) {
 
                     />
 
-                    <View style={{ position: 'absolute', top: '42%', left: "42%" }}>
-                        <Text style={{ ...FONTS.h1, textAlign: 'center' }}>{totalExpenseCount}</Text>
-                        <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Expenses</Text>
+<View style={{ position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ ...FONTS.h2, textAlign: 'center' }}>{selectedCategoryTotal(selectedCategory)}</Text>
+                        <Text style={{ ...FONTS.body3, textAlign: 'center' }}>{selectedCategory && selectedCategory.name}</Text>
                     </View>
                 </View>
 
@@ -365,7 +374,7 @@ export default function Categories(props) {
                             data={chartData}
                             labels={(datum) => `${datum.y}`}
                             radius={({ datum }) => (selectedCategory && selectedCategory.name == datum.name) ? SIZES.width * 0.4 : SIZES.width * 0.4 - 10}
-                            innerRadius={70}
+                            innerRadius={90}
                             labelRadius={({ innerRadius }) => (SIZES.width * 0.4 + innerRadius) / 2.5}
                             style={{
                                 labels: { fill: "white" },
@@ -391,11 +400,11 @@ export default function Categories(props) {
                                 }
                             }]}
 
-                        />
+                        /> 
                     </Svg>
-                    <View style={{ position: 'absolute', top: '42%', left: "42%" }}>
-                        <Text style={{ ...FONTS.h1, textAlign: 'center' }}>{totalExpenseCount}</Text>
-                        <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Expenses</Text>
+                    <View style={{ position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ ...FONTS.h2, textAlign: 'center' }}>{selectedCategoryTotal(selectedCategory)}</Text>
+                        <Text style={{ ...FONTS.body3, textAlign: 'center' }}>{selectedCategory && selectedCategory.name}</Text>
                     </View>
                 </View>
             )

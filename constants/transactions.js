@@ -30,6 +30,18 @@ function totalExpenditure(){
     return total;
 }
 
+function totalExpensesTheCategory(categoryName){
+    let total = 0;
+    expenses.map((category)=>{
+        if(category.name == categoryName)
+            category.expenses.map((ex)=>{
+                total += ex.total;
+            })
+    })
+
+    return total;
+}
+
 export const receipt = [
     {
         id: 1,
@@ -91,7 +103,7 @@ export const expenses = [
         color: COLORS.blue,
         expenses: [
             {
-                id: 1,
+                id: 5,
                 title: "Vitaminas",
                 description: "Polivitamínico de A-Z",
                 location: "Avenida Paulista' Pharmacy",
@@ -99,7 +111,7 @@ export const expenses = [
                 status: pendingStatus,
             },
             {
-                id: 2,
+                id: 6,
                 title: "Proteína",
                 description: "Proteína em pó",
                 location: "Avenida Paulista' Pharmacy",
@@ -107,7 +119,7 @@ export const expenses = [
                 status: confirmStatus,
             },
             {
-                id: 3,
+                id: 7,
                 title: "Supermercado",
                 description: "Compras de supermercado do mês",
                 location: "Avenida Paulista' Hipermarket",
@@ -124,7 +136,7 @@ export const expenses = [
         color: COLORS.gold,
         expenses: [
             {
-                id: 1,
+                id: 8,
                 title: "Combustível",
                 description: "Gazolina",
                 location: "Avenida Paulista' Posto Ipiranga",
@@ -132,7 +144,7 @@ export const expenses = [
                 status: confirmStatus,
             },
             {
-                id: 2,
+                id: 9,
                 title: "Combustível",
                 description: "Gazolina",
                 location: "Avenida Paulista' Posto Ipiranga",
@@ -140,7 +152,7 @@ export const expenses = [
                 status: confirmStatus,
             },
             {
-                id: 3,
+                id: 10,
                 title: "Combustível",
                 description: "Alcool",
                 location: "Avenida Paulista' Posto Ipiranga",
@@ -148,7 +160,7 @@ export const expenses = [
                 status: confirmStatus,
             },
             {
-                id: 4,
+                id: 11,
                 title: "Oficina",
                 description: "Troca de óleo",
                 location: "Avenida Paulista' Posto Ipiranga",
@@ -164,7 +176,7 @@ export const expenses = [
         color: COLORS.purple,
         expenses: [
             {
-                id: 11,
+                id: 12,
                 title: "Skin Care",
                 description: "Skin care",
                 location: "Avenida Paulista' Pharmacy",
@@ -172,7 +184,7 @@ export const expenses = [
                 status: pendingStatus,
             },
             {
-                id: 12,
+                id: 13,
                 title: "Loção",
                 description: "Loção",
                 location: "Avenida Paulista' Pharmacy",
@@ -180,7 +192,7 @@ export const expenses = [
                 status: confirmStatus,
             },
             {
-                id: 13,
+                id: 14,
                 title: "Máscara falsa",
                 description: "Máscara falsa",
                 location: "Avenida Paulista' Pharmacy",
@@ -188,7 +200,7 @@ export const expenses = [
                 status: pendingStatus,
             },
             {
-                id: 14,
+                id: 15,
                 title: "Creme protetor solar",
                 description: "Creme protetor solar",
                 location: "Avenida Paulista' Pharmacy",
@@ -196,7 +208,7 @@ export const expenses = [
                 status: pendingStatus,
             },
             {
-                id: 14,
+                id: 16,
                 title: "Remédios",
                 description: "Compra de remédios",
                 location: "Avenida Paulista' Pharmacy",
@@ -212,7 +224,7 @@ export const expenses = [
         color: COLORS.red,
         expenses: [
             {
-                id: 15,
+                id: 17,
                 title: "Associação de ginásio",
                 description: "Taxa mensal",
                 location: "Avenida Paulista' Gym",
@@ -220,7 +232,7 @@ export const expenses = [
                 status: pendingStatus,
             },
             {
-                id: 16,
+                id: 18,
                 title: "Luvas",
                 description: "Equipamento de ginástica",
                 location: "Avenida Paulista' Gym",
@@ -228,7 +240,7 @@ export const expenses = [
                 status: confirmStatus,
             },
             {
-                id: 17,
+                id: 19,
                 title: "Camiseta",
                 description: "Camiseta de cor lisa",
                 location: "Avenida Paulista' Mall",
@@ -236,7 +248,7 @@ export const expenses = [
                 status: pendingStatus,
             },
             {
-                id: 18,
+                id: 20,
                 title: "Jeans",
                 description: "Jeans azul",
                 location: "Avenida Paulista' Mall",
@@ -252,4 +264,5 @@ export default {
     expenses,
     totalReceipt,
     totalExpenditure,
+    totalExpensesTheCategory,
 }
