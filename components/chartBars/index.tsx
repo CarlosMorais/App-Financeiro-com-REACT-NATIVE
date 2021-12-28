@@ -37,9 +37,9 @@ export default function ChartBars(props) {
             if (data && data.length == 1)
                 return 15;
             else if (data && data.length == 2)
-                return 7;
+                return 12;
             else
-                return 4;
+                return 10;
         }
 
         function percentWidth(data) {

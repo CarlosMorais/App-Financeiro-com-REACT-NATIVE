@@ -29,17 +29,17 @@ export default function DFC(props) {
                     {
                         recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
                         expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${monName[new Date().getMonth() + 0 - (new Date().getMonth() + 0 > 11 ? 12 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() + 0 > 11 ? 1 : 0)}`,
+                        label: `${monName[new Date().getMonth() - 2 + (new Date().getMonth() - 2 < 0 ? 11 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() - 2 < 0 ? 11 : 0)}`,
                     },
                     {
                         recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
                         expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${monName[new Date().getMonth() + 1 - (new Date().getMonth() + 1 > 11 ? 12 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() + 1 > 11 ? 1 : 0)}`,
+                        label: `${monName[new Date().getMonth() - 1 + (new Date().getMonth() - 1 < 0 ? 11 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() - 1 < 0 ? 11 : 0)}`,
                     },
                     {
                         recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
                         expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${monName[new Date().getMonth() + 2 - (new Date().getMonth() + 2 > 11 ? 12 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() + 2 > 11 ? 1 : 0)}`,
+                        label: `${monName[new Date().getMonth() - 0 + (new Date().getMonth() - 0 < 0 ? 11 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() - 0 < 0 ? 11 : 0)}`,
                     }
                 ]}
                 />
