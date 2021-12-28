@@ -85,13 +85,26 @@ export const ExpenseLabel = styled.Text`
 
 export const Footer = styled.View`
     display: flex; 
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border-top-color: #444;
     border-top-width: 1px;
     width: 100%;
     background-color: rgba(100, 100, 100, 0.1);
+`;
+
+export const BoxFooterLabels = styled.View`
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+`;
+
+export const BoxFooterLabelText = styled.Text`
+    transform: rotate(-0deg);
+    padding: 5px;
 `;
 
 export const LegendColor = styled.View`
