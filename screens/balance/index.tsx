@@ -8,7 +8,7 @@ import util from '../../util';
 import ChartBars from "../../components/chartBars";
 
 export default function Balance(props) {
-    const monName = new Array ("janeiro", "fevereiro", "março", "abril", "Maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro")
+    const monName = new Array ("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
 
     return (
         <View style={{ 
@@ -19,8 +19,8 @@ export default function Balance(props) {
             <View style={{ flexDirection: 'row', }}>
                 {/* Title */}
                 <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>SALDO DE {new Date().getMonth() + 1}/{new Date().getFullYear()}</Text>
-                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Receitas e Despesas do Mês</Text>
+                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>SALDO DO MÊS</Text>
+                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Resultado das Receitas e Despesas</Text>
                 </View>
             </View>
             <View style={{flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20}}>
@@ -28,7 +28,8 @@ export default function Balance(props) {
                 data={[
                     {
                         recept: transactions.totalReceipt(),
-                        expense: transactions.totalExpenditure()
+                        expense: transactions.totalExpenditure(),
+                        label: `${monName[new Date().getMonth() - 1 + (new Date().getMonth() - 1 < 0 ? 11 : 0)].toUpperCase()} DE ${new Date().getFullYear() + (new Date().getMonth() - 1 < 0 ? 11 : 0)}`,
                     }
                 ]}
                 />

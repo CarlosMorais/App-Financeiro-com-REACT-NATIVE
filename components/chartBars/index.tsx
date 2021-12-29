@@ -3,7 +3,7 @@ import { Container, Top, BoxBars, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeB
 import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight, faDollarSign} from '@fortawesome/free-solid-svg-icons'
 import util from '../../util';
 
 
@@ -73,6 +73,15 @@ export default function ChartBars(props) {
                 return 1;
         }
 
+        function footerLabelTextFontSize(data) {
+            if (data && data.length == 1)
+                return 16;
+            else if (data && data.length == 2)
+                return 14;
+            else
+                return 13;
+        }
+
         if (data && data.length) {
             return data.map((item, index) => {
                 const valueBigger = getBigger(data);
@@ -104,7 +113,7 @@ export default function ChartBars(props) {
                                 </BoxBarLeft>
                             </>
                         )}
-                        {isFooter && item.label && item.label.length > 0 && <BoxFooterLabelText>{item.label}</BoxFooterLabelText>}
+                        {isFooter && item.label && item.label.length > 0 && <BoxFooterLabelText fontSize={footerLabelTextFontSize(data)}>{item.label}</BoxFooterLabelText>}
                         {!isFooter && (
                             <>
                                 <BoxBarRight spaceBetweenBars={spaceBetweenBars(data)}>
@@ -117,6 +126,51 @@ export default function ChartBars(props) {
                 )
             })
         }
+    }
+
+    function renderNavigationButton(icon) {
+        return (
+            <TouchableOpacity
+                style={{
+                    flex: 1,
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingVertical: 10,
+                    paddingHorizontal: 10,
+                    margin: 5,
+                    borderRadius: 5,
+                    backgroundColor: COLORS.white,
+                    ...styles.shadow,
+                }}
+                onPress={() => { }}>
+                <FontAwesomeIcon icon={icon} size={25} color={'#000'} style={{opacity: 0.55,}}/>
+            </TouchableOpacity>
+        )
+    }
+
+    function renderBalance(balance) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingVertical: 10,
+                    paddingHorizontal: 20,
+                    margin: 15,
+                    marginTop: 10,
+                    borderRadius: 10,
+                    backgroundColor: COLORS.white,
+                }}>
+                <FontAwesomeIcon icon={faDollarSign} size={55} color={'#000'} style={{opacity: 0.55,}}/>
+                <View style={{ flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                    <Text style={{fontSize: 27, fontWeight: 'bold', alignSelf: 'center', color: '#243027'}}>{balance}</Text>
+                    <Text style={{fontSize: 14, fontWeight: 'bold', alignSelf: 'flex-end', color: '#919090',}}>SALDO DO PERÍODO</Text>
+                </View>
+            </View>
+        )
     }
 
 
@@ -142,6 +196,25 @@ export default function ChartBars(props) {
                         <LegendText>Despesas</LegendText>
                     </BoxLegendChild>
                 </BoxLegend>
+                <View 
+                style={{
+                    display: 'flex', 
+                    flexDirection: 'row',
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                }}>
+                    {renderBalance(util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure()))}
+                </View>
+                <View 
+                style={{
+                    display: 'flex', 
+                    flexDirection: 'row',
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                }}>
+                    {renderNavigationButton(faArrowLeft)}
+                    {renderNavigationButton(faArrowRight)}
+                </View>
                 {/* <FooterLeft>
 
                 </FooterLeft>

@@ -105,6 +105,8 @@ export const BoxFooterLabels = styled.View`
 export const BoxFooterLabelText = styled.Text`
     transform: rotate(-0deg);
     padding: 5px;
+    font-weight: bold;
+    font-size: ${props => props.fontSize || 13}px;
 `;
 
 export const LegendColor = styled.View`
