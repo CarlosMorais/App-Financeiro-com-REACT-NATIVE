@@ -3,13 +3,13 @@ import { Container, Top, BoxBars, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeB
 import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowLeft, faArrowRight, faDollarSign} from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faChevronRight, faDollarSign } from '@fortawesome/free-solid-svg-icons'
 import util from '../../util';
 
 
 
 export default function ChartBars(props) {
-    const { data = [] } = props;
+    const { data = [], handleNext = () => {}, handlePrevious = () => {} } = props;
 
     function renderBars(data, isFooter = false) {
 
@@ -128,28 +128,31 @@ export default function ChartBars(props) {
         }
     }
 
-    function renderNavigationButton(icon) {
+    function renderNavigationButton(icon, isLeft = true) {
         return (
             <TouchableOpacity
                 style={{
-                    flex: 1,
+                    width: 40,
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     paddingVertical: 10,
                     paddingHorizontal: 10,
-                    margin: 5,
-                    borderRadius: 5,
+                    margin: 10,
+                    borderTopLeftRadius: isLeft ? 5 : 0,
+                    borderTopRightRadius: !isLeft ? 5 : 0,
+                    borderBottomLeftRadius:  isLeft ? 5 : 0,
+                    borderBottomRightRadius:  !isLeft ? 5 : 0,
                     backgroundColor: COLORS.white,
-                    ...styles.shadow,
+                    // ...styles.shadow,
                 }}
-                onPress={() => { }}>
-                <FontAwesomeIcon icon={icon} size={25} color={'#000'} style={{opacity: 0.55,}}/>
+                onPress={() => { isLeft ? handlePrevious() : handleNext() }}>
+                <FontAwesomeIcon icon={icon} size={25} color={'#000'} style={{ opacity: 0.9, }} />
             </TouchableOpacity>
         )
     }
 
-    function renderBalance(balance) {
+    function renderBalance(balance, data) {
         return (
             <View
                 style={{
@@ -158,16 +161,17 @@ export default function ChartBars(props) {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     paddingVertical: 10,
-                    paddingHorizontal: 20,
-                    margin: 15,
-                    marginTop: 10,
-                    borderRadius: 10,
-                    backgroundColor: COLORS.white,
+                    paddingHorizontal: 15,
+                    margin: 0,
+                    marginTop: -2,
+                    marginBottom: 0,
+                    borderRadius: 0,
+                    backgroundColor: '#c9c9c9b5',
                 }}>
-                <FontAwesomeIcon icon={faDollarSign} size={55} color={'#000'} style={{opacity: 0.55,}}/>
-                <View style={{ flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                    <Text style={{fontSize: 27, fontWeight: 'bold', alignSelf: 'center', color: '#243027'}}>{balance}</Text>
-                    <Text style={{fontSize: 14, fontWeight: 'bold', alignSelf: 'flex-end', color: '#919090',}}>SALDO DO PERÍODO</Text>
+                <FontAwesomeIcon icon={faDollarSign} size={45} color={'#000'} style={{ opacity: 0.5, marginLeft: -10, marginRight: -10, }} />
+                <View style={{flex: 1, flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', alignSelf: 'center', color: '#243027' }}>{balance}</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 'bold', alignSelf: 'center', color: '#919090', }}>SALDO DO {data && data.length == 1 ? 'MÊS' : 'PERÍODO'}</Text>
                 </View>
             </View>
         )
@@ -177,15 +181,6 @@ export default function ChartBars(props) {
     return (
         <Container>
             <Top>
-
-            </Top>
-            <BoxBars>
-                {renderBars(data)}
-            </BoxBars>
-            <Footer>
-                <BoxFooterLabels>
-                    {renderBars(data, true)}
-                </BoxFooterLabels>
                 <BoxLegend>
                     <BoxLegendChild>
                         <LegendColor legendColor={'blue'} />
@@ -196,25 +191,36 @@ export default function ChartBars(props) {
                         <LegendText>Despesas</LegendText>
                     </BoxLegendChild>
                 </BoxLegend>
-                <View 
+            </Top>
+            <BoxBars>
+                {renderBars(data)}
+            </BoxBars>
+            <Footer>
+                <BoxFooterLabels>
+                    {renderBars(data, true)}
+                </BoxFooterLabels>
+
+                <View
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}>
+                    {renderNavigationButton(faChevronLeft)}
+                    {renderBalance(util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure()), data)}
+                    {renderNavigationButton(faChevronRight, false)}
+                </View>
+                {/* <View 
                 style={{
                     display: 'flex', 
                     flexDirection: 'row',
                     justifyContent: 'space-between', 
                     alignItems: 'center',
                 }}>
-                    {renderBalance(util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure()))}
-                </View>
-                <View 
-                style={{
-                    display: 'flex', 
-                    flexDirection: 'row',
-                    justifyContent: 'space-between', 
-                    alignItems: 'center',
-                }}>
-                    {renderNavigationButton(faArrowLeft)}
-                    {renderNavigationButton(faArrowRight)}
-                </View>
+                    {renderNavigationButton(faChevronLeft)}
+                    {renderNavigationButton(faChevronRight)}
+                </View> */}
                 {/* <FooterLeft>
 
                 </FooterLeft>

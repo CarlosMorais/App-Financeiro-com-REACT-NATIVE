@@ -36,10 +36,22 @@ function currencyFormat(num) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  function monthInText(numberMonth){
+    const month = new Array ("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+    return month[numberMonth];
+  }
+
+  function monthInAcronyms(numberMonth){
+    const month = new Array ("JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ");
+    return month[numberMonth];
+  }
+
  export default {
     currencyFormat,
     numberFormat,
     clearNumber,
     getExpense,
     getRandomInt,
+    monthInText,
+    monthInAcronyms,
 }

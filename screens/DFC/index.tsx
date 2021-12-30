@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Container } from "./styles";
 import { Text, View, TouchableOpacity, Image, Animated, Platform } from 'react-native';
 import { VictoryPie } from 'victory-native';
@@ -8,7 +8,8 @@ import util from '../../util';
 import ChartBars from "../../components/chartBars";
 
 export default function DFC(props) {
-    const monName = new Array ("JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ")
+    const [month, setMonth] = useState(new Date().getMonth());
+    const [year, setYear] = useState(new Date().getFullYear());
 
     return (
         <View style={{ 
@@ -29,19 +30,27 @@ export default function DFC(props) {
                     {
                         recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
                         expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${monName[new Date().getMonth() - 2 + (new Date().getMonth() - 2 < 0 ? 11 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() - 2 < 0 ? 11 : 0)}`,
+                        label: `${util.monthInAcronyms(month - 2 < 0 ? (month - 2 + 12) : month - 2).toUpperCase()} ${month - 2 < 0 ? year - 1 : year}`,
                     },
                     {
                         recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
                         expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${monName[new Date().getMonth() - 1 + (new Date().getMonth() - 1 < 0 ? 11 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() - 1 < 0 ? 11 : 0)}`,
+                        label: `${util.monthInAcronyms(month - 1 < 0 ? (month - 1 + 12) : month - 1).toUpperCase()} ${month - 1 < 0 ? year - 1 : year}`,
                     },
                     {
                         recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
                         expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${monName[new Date().getMonth() - 0 + (new Date().getMonth() - 0 < 0 ? 11 : 0)]} ${new Date().getFullYear() + (new Date().getMonth() - 0 < 0 ? 11 : 0)}`,
+                        label: `${util.monthInAcronyms(month).toUpperCase()} ${year}`,
                     }
                 ]}
+                handleNext={()=>{
+                    setYear(month == 11 ? year + 1 : year);
+                    setMonth(month >= 11 ? 0 : month + 1);
+                }}
+                handlePrevious={()=>{
+                    setYear(month == 0 ? year - 1 : year);
+                    setMonth(month == 0 ? 11 : month - 1)
+                }}
                 />
             </View>
         </View>

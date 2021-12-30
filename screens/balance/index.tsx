@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Container } from "./styles";
 import { Text, View, TouchableOpacity, Image, Animated, Platform } from 'react-native';
 import { VictoryPie } from 'victory-native';
@@ -8,7 +8,8 @@ import util from '../../util';
 import ChartBars from "../../components/chartBars";
 
 export default function Balance(props) {
-    const monName = new Array ("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+    const [month, setMonth] = useState(new Date().getMonth());
+    const [year, setYear] = useState(new Date().getFullYear());
 
     return (
         <View style={{ 
@@ -29,9 +30,17 @@ export default function Balance(props) {
                     {
                         recept: transactions.totalReceipt(),
                         expense: transactions.totalExpenditure(),
-                        label: `${monName[new Date().getMonth() - 1 + (new Date().getMonth() - 1 < 0 ? 11 : 0)].toUpperCase()} DE ${new Date().getFullYear() + (new Date().getMonth() - 1 < 0 ? 11 : 0)}`,
+                        label: `${util.monthInText(month).toUpperCase()} DE ${year}`,
                     }
                 ]}
+                handleNext={()=>{
+                    setYear(month == 11 ? year + 1 : year);
+                    setMonth(month >= 11 ? 0 : month + 1);
+                }}
+                handlePrevious={()=>{
+                    setYear(month == 0 ? year - 1 : year);
+                    setMonth(month == 0 ? 11 : month - 1)
+                }}
                 />
             </View>
         </View>

@@ -11,7 +11,10 @@ export const Container = styled.View`
 `;
 
 export const Top = styled.View`
-    margin-top: 25px;
+    margin-top: 0px;
+    margin-bottom: 25px;
+    width: 100%;
+    text-align: center;
 `;
 
 export const BoxBars = styled.View`
@@ -127,6 +130,8 @@ export const BoxLegend = styled.View`
     text-align: center;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const BoxLegendChild = styled.View`
@@ -134,7 +139,7 @@ export const BoxLegendChild = styled.View`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 10px;
+    margin: 5px;
 `;
 
 export const FooterLeft = styled.View`
