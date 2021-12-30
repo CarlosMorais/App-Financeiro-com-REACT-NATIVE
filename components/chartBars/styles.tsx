@@ -20,7 +20,26 @@ export const Top = styled.View`
 export const BoxBars = styled.View`
     flex: 1;
     flex-direction: row;
-    margin-top: 30px;
+    margin-top: 40px;
+`;
+
+export const BoxWidget = styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+`;
+
+export const BoxBarsInner = styled.View`
+    margin-left: 15px;
+    margin-right: 15px;
+    flex: 1;
+    flex-direction: row;
+    /* background-color: rgba(100, 100, 100, 0.1); */
 `;
 
 export const BoxBarsChild = styled.View`
@@ -91,10 +110,17 @@ export const Footer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-top-color: #444;
+    border-top-color: rgba(100, 100, 100, 0.2);
     border-top-width: 1px;
     width: 100%;
-    background-color: rgba(100, 100, 100, 0.1);
+    /* background-color: rgba(100, 100, 100, 0.1); */
+`;
+
+export const FooterInner = styled.View`
+    margin-left: 15px;
+    margin-right: 15px;
+    width: 100%;
+    /* background-color: rgba(100, 100, 100, 0.1); */
 `;
 
 export const BoxFooterLabels = styled.View`
@@ -113,17 +139,17 @@ export const BoxFooterLabelText = styled.Text`
 `;
 
 export const LegendColor = styled.View`
-    height: 15px;
-    width: 15px;
+    height: 12px;
+    width: 12px;
     align-self: center;
     background-color: ${props => props.legendColor || 'red'};
     margin-right: 5px;
 `;
 
 export const LegendText = styled.Text`
-    font-size: 15px;
+    font-size: 13px;
     color: #333;
-    margin-right: 18px;
+    margin-right: ${props => props.marginRight || 0}px;
 `;
 
 export const BoxLegend = styled.View`

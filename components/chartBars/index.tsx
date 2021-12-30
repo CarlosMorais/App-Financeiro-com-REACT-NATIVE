@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Container, Top, BoxBars, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeBar, RecipeLabel, BoxLegend, BoxLegendChild, ExpenseLabel, ExpenseBar, Footer, LegendColor, LegendText, BoxFooterLabels, BoxFooterLabelText, FooterLeft, FooterRight } from "./styles";
+import { Container, Top, BoxBars, BoxWidget, BoxBarsInner, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeBar, RecipeLabel, BoxLegend, BoxLegendChild, ExpenseLabel, ExpenseBar, Footer, FooterInner, LegendColor, LegendText, BoxFooterLabels, BoxFooterLabelText, FooterLeft, FooterRight } from "./styles";
 import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -101,7 +101,7 @@ export default function ChartBars(props) {
                         key={index}
                         style={{
                             width: (100 / data.length) + '%',
-                            backgroundColor: isFooter && item.label && item.label.length > 0 ? 'rgba(0,0,0,0.05)' : 'transparent',
+                            backgroundColor: isFooter && item.label && item.label.length > 0 ? 'rgba(0,0,0,0.0)' : 'transparent',
                             justifyContent: 'center',
                         }}>
 
@@ -165,7 +165,7 @@ export default function ChartBars(props) {
                     margin: 0,
                     marginTop: -2,
                     marginBottom: 0,
-                    borderRadius: 0,
+                    borderRadius: 5,
                     backgroundColor: '#c9c9c9b5',
                 }}>
                 <FontAwesomeIcon icon={faDollarSign} size={45} color={'#000'} style={{ opacity: 0.5, marginLeft: -10, marginRight: -10, }} />
@@ -184,7 +184,7 @@ export default function ChartBars(props) {
                 <BoxLegend>
                     <BoxLegendChild>
                         <LegendColor legendColor={'blue'} />
-                        <LegendText>Receitas</LegendText>
+                        <LegendText marginRight={5}>Receitas</LegendText>
                     </BoxLegendChild>
                     <BoxLegendChild>
                         <LegendColor legendColor={'red'} />
@@ -193,24 +193,20 @@ export default function ChartBars(props) {
                 </BoxLegend>
             </Top>
             <BoxBars>
-                {renderBars(data)}
+                <BoxBarsInner>
+                    {renderBars(data)}
+                </BoxBarsInner>
             </BoxBars>
             <Footer>
+                <FooterInner>
                 <BoxFooterLabels>
                     {renderBars(data, true)}
                 </BoxFooterLabels>
-
-                <View
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}>
+                <BoxWidget>
                     {renderNavigationButton(faChevronLeft)}
                     {renderBalance(util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure()), data)}
                     {renderNavigationButton(faChevronRight, false)}
-                </View>
+                </BoxWidget>
                 {/* <View 
                 style={{
                     display: 'flex', 
@@ -227,6 +223,7 @@ export default function ChartBars(props) {
                 <FooterRight>
 
                 </FooterRight> */}
+                </FooterInner>
             </Footer>
         </Container>
     )
