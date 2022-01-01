@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Container, Top, BoxBars, BoxWidget, BoxBarsInner, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeBar, RecipeLabel, BoxLegend, BoxLegendChild, ExpenseLabel, ExpenseBar, Footer, FooterInner, LegendColor, LegendText, BoxFooterLabels, BoxFooterLabelText, FooterLeft, FooterRight } from "./styles";
+import { Container, WidgetBalance, BalanceNavigationButton, Top, BoxBars, BoxWidget, BoxBarsInner, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeBar, RecipeLabel, BoxLegend, BoxLegendChild, ExpenseLabel, ExpenseBar, Footer, FooterInner, LegendColor, LegendText, BoxFooterLabels, BoxFooterLabelText, FooterLeft, FooterRight } from "./styles";
 import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -9,7 +9,14 @@ import util from '../../util';
 
 
 export default function ChartBars(props) {
-    const { data = [], handleNext = () => {}, handlePrevious = () => {} } = props;
+    const { data = [], handleNext = () => { }, handlePrevious = () => { } } = props;
+
+    function isVertical(data) {
+        if (data && data.length > 3)
+            return true;
+        else
+            return false;
+    }
 
     function renderBars(data, isFooter = false) {
 
@@ -38,8 +45,12 @@ export default function ChartBars(props) {
                 return 15;
             else if (data && data.length == 2)
                 return 12;
-            else
+            else if (data && data.length == 3)
                 return 10;
+            else if (data && data.length == 4)
+                return 7;
+            else
+                return 5;
         }
 
         function percentWidth(data) {
@@ -47,8 +58,14 @@ export default function ChartBars(props) {
                 return 55;
             else if (data && data.length == 2)
                 return 65;
-            else
+            else if (data && data.length == 3)
                 return 80;
+            else if (data && data.length == 4)
+                return 80;
+            else if (data && data.length == 5)
+                return 80;
+            else
+                return 61;
         }
 
         function handleNumber(number, data) {
@@ -78,8 +95,12 @@ export default function ChartBars(props) {
                 return 16;
             else if (data && data.length == 2)
                 return 14;
-            else
+            else if (data && data.length == 3)
                 return 13;
+            else if (data && data.length == 4)
+                return 12;
+            else
+                return 10;
         }
 
         if (data && data.length) {
@@ -108,8 +129,8 @@ export default function ChartBars(props) {
                         {!isFooter && (
                             <>
                                 <BoxBarLeft spaceBetweenBars={spaceBetweenBars(data)}>
-                                    <RecipeLabel labelFontSize={labelFontSize(data)}>{handleNumber(util.numberFormat(recept), data)}</RecipeLabel>
-                                    <RecipeBar percentRecept={percentRecept} barRadius={barRadius(data)} percentWidth={percentWidth(data)} />
+                                    <RecipeLabel isVertical={isVertical(data)} labelFontSize={labelFontSize(data)}>{handleNumber(util.numberFormat(recept), data)}</RecipeLabel>
+                                    <RecipeBar isVertical={isVertical(data)} percentRecept={percentRecept} barRadius={barRadius(data)} percentWidth={percentWidth(data)} />
                                 </BoxBarLeft>
                             </>
                         )}
@@ -117,8 +138,8 @@ export default function ChartBars(props) {
                         {!isFooter && (
                             <>
                                 <BoxBarRight spaceBetweenBars={spaceBetweenBars(data)}>
-                                    <ExpenseLabel labelFontSize={labelFontSize(data)}>{handleNumber('-' + util.numberFormat(expense), data)}</ExpenseLabel>
-                                    <ExpenseBar percentExpense={percentExpense} barRadius={barRadius(data)} percentWidth={percentWidth(data)} />
+                                    <ExpenseLabel isVertical={isVertical(data)} labelFontSize={labelFontSize(data)}>{handleNumber('-' + util.numberFormat(expense), data)}</ExpenseLabel>
+                                    <ExpenseBar isVertical={isVertical(data)} percentExpense={percentExpense} barRadius={barRadius(data)} percentWidth={percentWidth(data)} />
                                 </BoxBarRight>
                             </>
                         )}
@@ -130,50 +151,21 @@ export default function ChartBars(props) {
 
     function renderNavigationButton(icon, isLeft = true) {
         return (
-            <TouchableOpacity
-                style={{
-                    width: 40,
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    paddingVertical: 10,
-                    paddingHorizontal: 10,
-                    margin: 10,
-                    borderTopLeftRadius: isLeft ? 5 : 0,
-                    borderTopRightRadius: !isLeft ? 5 : 0,
-                    borderBottomLeftRadius:  isLeft ? 5 : 0,
-                    borderBottomRightRadius:  !isLeft ? 5 : 0,
-                    backgroundColor: COLORS.white,
-                    // ...styles.shadow,
-                }}
-                onPress={() => { isLeft ? handlePrevious() : handleNext() }}>
+            <BalanceNavigationButton isLeft={isLeft} onPress={() => { isLeft ? handlePrevious() : handleNext() }}>
                 <FontAwesomeIcon icon={icon} size={25} color={'#000'} style={{ opacity: 0.9, }} />
-            </TouchableOpacity>
+            </BalanceNavigationButton>
         )
     }
 
     function renderBalance(balance, data) {
         return (
-            <View
-                style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    paddingVertical: 10,
-                    paddingHorizontal: 15,
-                    margin: 0,
-                    marginTop: -2,
-                    marginBottom: 0,
-                    borderRadius: 5,
-                    backgroundColor: '#c9c9c9b5',
-                }}>
+            <WidgetBalance>
                 <FontAwesomeIcon icon={faDollarSign} size={45} color={'#000'} style={{ opacity: 0.5, marginLeft: -10, marginRight: -10, }} />
-                <View style={{flex: 1, flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                    <Text style={{ fontSize: 22, fontWeight: 'bold', alignSelf: 'center', color: '#243027' }}>{balance}</Text>
-                    <Text style={{ fontSize: 13, fontWeight: 'bold', alignSelf: 'center', color: '#919090', }}>SALDO DO {data && data.length == 1 ? 'MÊS' : 'PERÍODO'}</Text>
+                <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+                    <Text style={{ fontSize: 25, fontWeight: 'bold', alignSelf: 'center', color: '#243027' }}>{balance}</Text>
+                    <Text style={{ fontSize: 13, fontWeight: 'bold', alignSelf: 'center', color: '#919090', marginTop: 3, }}>SALDO {data && data.length > 1 ? 'DESTES MESES' : 'DESTE MÊS'}</Text>
                 </View>
-            </View>
+            </WidgetBalance>
         )
     }
 
@@ -182,47 +174,31 @@ export default function ChartBars(props) {
         <Container>
             <Top>
                 <BoxLegend>
-                    <BoxLegendChild>
+                    <BoxLegendChild isVertical={isVertical(data)}>
                         <LegendColor legendColor={'blue'} />
                         <LegendText marginRight={5}>Receitas</LegendText>
                     </BoxLegendChild>
-                    <BoxLegendChild>
+                    <BoxLegendChild isVertical={isVertical(data)}>
                         <LegendColor legendColor={'red'} />
                         <LegendText>Despesas</LegendText>
                     </BoxLegendChild>
                 </BoxLegend>
             </Top>
             <BoxBars>
-                <BoxBarsInner>
+                <BoxBarsInner isVertical={isVertical(data)}>
                     {renderBars(data)}
                 </BoxBarsInner>
             </BoxBars>
             <Footer>
-                <FooterInner>
-                <BoxFooterLabels>
-                    {renderBars(data, true)}
-                </BoxFooterLabels>
-                <BoxWidget>
-                    {renderNavigationButton(faChevronLeft)}
-                    {renderBalance(util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure()), data)}
-                    {renderNavigationButton(faChevronRight, false)}
-                </BoxWidget>
-                {/* <View 
-                style={{
-                    display: 'flex', 
-                    flexDirection: 'row',
-                    justifyContent: 'space-between', 
-                    alignItems: 'center',
-                }}>
-                    {renderNavigationButton(faChevronLeft)}
-                    {renderNavigationButton(faChevronRight)}
-                </View> */}
-                {/* <FooterLeft>
-
-                </FooterLeft>
-                <FooterRight>
-
-                </FooterRight> */}
+                <FooterInner isVertical={isVertical(data)}>
+                    <BoxFooterLabels>
+                        {renderBars(data, true)}
+                    </BoxFooterLabels>
+                    <BoxWidget>
+                        {renderNavigationButton(faChevronLeft)}
+                        {renderBalance(util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure()), data)}
+                        {renderNavigationButton(faChevronRight, false)}
+                    </BoxWidget>
                 </FooterInner>
             </Footer>
         </Container>

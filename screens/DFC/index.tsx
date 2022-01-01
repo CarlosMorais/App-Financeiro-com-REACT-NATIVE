@@ -20,32 +20,18 @@ export default function DFC(props) {
             <View style={{ flexDirection: 'row', }}>
                 {/* Title */}
                 <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>DFC - DEMONSTRATIVO DE FLUXO DE CAIXA</Text>
-                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Relatório de receitas e despesas</Text>
+                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>DFC - FLUXO DE CAIXA</Text>
+                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Relatório de Demonstrativo de Fluxo de Caixa</Text>
                 </View>
             </View>
             <View style={{flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20}}>
                 <ChartBars 
-                data={[
-                    {
-                        recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
-                        expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${util.monthInAcronyms(month - 2 < 0 ? (month - 2 + 12) : month - 2).toUpperCase()} ${month - 2 < 0 ? year - 1 : year}`,
-                    },
-                    {
-                        recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
-                        expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${util.monthInAcronyms(month - 1 < 0 ? (month - 1 + 12) : month - 1).toUpperCase()} ${month - 1 < 0 ? year - 1 : year}`,
-                    },
-                    {
-                        recept: transactions.totalReceipt() + util.getRandomInt(0, 20000),
-                        expense: transactions.totalExpenditure() + util.getRandomInt(0, 20000),
-                        label: `${util.monthInAcronyms(month).toUpperCase()} ${year}`,
-                    }
-                ]}
+                data={transactions.DFC(month, year)}
                 handleNext={()=>{
-                    setYear(month == 11 ? year + 1 : year);
-                    setMonth(month >= 11 ? 0 : month + 1);
+                    if(month < new Date().getMonth() && year <= new Date().getFullYear()){
+                        setYear(month == 11 ? year + 1 : year);
+                        setMonth(month >= 11 ? 0 : month + 1);
+                    }
                 }}
                 handlePrevious={()=>{
                     setYear(month == 0 ? year - 1 : year);

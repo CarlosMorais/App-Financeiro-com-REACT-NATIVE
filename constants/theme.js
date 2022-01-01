@@ -8,6 +8,7 @@ export const COLORS = {
 
     // colors
     appTheme: '#3abd4b',
+    // appTheme: '#6c5dff',
     black: "#1E1F20",
     white: "#FFFFFF",
     lightGray: "#F5F7F9",

@@ -3,7 +3,7 @@ import { Container } from "./styles";
 import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faBell, faDollarSign, faChartPie, faChartBar, faList, faBars, faPlus, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faBell, faDollarSign, faHome, faChartPie, faChartBar, faList, faBars, faPlus, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import util from "../../util";
 
 
@@ -75,68 +75,71 @@ export default function Header(props) {
                     </TouchableOpacity>
                 </View>
             </View>
-
-            <View style={{
-                flexDirection: 'row',
-                marginTop: 15,
-                alignItems: 'center',
-                width: '100%',
-                justifyContent: 'space-between',
-                borderRadius: 25,
-                backgroundColor: 'rgba(255,255,255,0.2)',
-            }}>
-                <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 2,
-                    paddingVertical: 3,
-                    marginLeft: 7,
-                }}>
+            {pageActive == 'balance' && (
+                <>
                     <View style={{
-                        height: 35,
-                        width: 35,
+                        flexDirection: 'row',
+                        marginTop: 15,
+                        alignItems: 'center',
+                        width: '100%',
+                        justifyContent: 'space-between',
                         borderRadius: 25,
-                        justifyContent: 'center',
-                        alignItems: 'center'
+                        backgroundColor: 'rgba(255,255,255,0.2)',
                     }}>
-                        <Image
-                            source={images.shake}
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                borderRadius: 40,
-                            }}
-                        />
+                        <View style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 2,
+                            paddingVertical: 3,
+                            marginLeft: 7,
+                        }}>
+                            <View style={{
+                                height: 35,
+                                width: 35,
+                                borderRadius: 25,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Image
+                                    source={images.shake}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        borderRadius: 40,
+                                    }}
+                                />
+                            </View>
+                            <View style={{ marginLeft: 10 }}>
+                                <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Luiz Carlos</Text>
+                                <Text style={{ ...FONTS.body4, color: COLORS.white }}>Bem-vindo!</Text>
+                            </View>
+                        </View>
+                        <View style={{ display: 'flex', flexDirection: 'row', }}>
+                            <TouchableOpacity
+                                style={{
+                                    marginRight: 5,
+                                    borderRadius: 10,
+                                    padding: 5,
+                                }}
+                                onPress={() => { }}>
+                                <FontAwesomeIcon icon={faSortDown} size={30} color={COLORS.white}
+                                    style={{
+                                        marginTop: -12,
+                                        opacity: 0.8,
+                                    }
+                                    } />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={{ marginLeft: 10 }}>
-                        <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Luiz Carlos</Text>
-                        <Text style={{ ...FONTS.body4, color: COLORS.white }}>Bem-vindo!</Text>
+                    <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 15, marginBottom: 0, }}>
+                        <Text style={{ ...FONTS.h4, color: COLORS.white }}>Saldo Do Mês Atual</Text>
+                        <Text style={{ color: COLORS.white, ...FONTS.h1 }}>{util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure())}</Text>
                     </View>
-                </View>
-                <View style={{ display: 'flex', flexDirection: 'row', }}>
-                    <TouchableOpacity
-                        style={{
-                            marginRight: 5,
-                            borderRadius: 10,
-                            padding: 5,
-                        }}
-                        onPress={() => { }}>
-                        <FontAwesomeIcon icon={faSortDown} size={30} color={COLORS.white}
-                            style={{
-                                marginTop: -12,
-                                opacity: 0.8,
-                            }
-                            } />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 15, marginBottom: 0, }}>
-                <Text style={{ ...FONTS.h4, color: COLORS.white }}>Saldo Do Mês</Text>
-                <Text style={{ color: COLORS.white, ...FONTS.h1 }}>{util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure())}</Text>
-            </View>
+                </>
+            )}
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 15, marginBottom: 15, }}>
-                {renderButton('Saldo', faDollarSign, 'balance')}
+                {renderButton(pageActive == 'balance' ? 'Saldo' : 'Início', pageActive == 'balance' ? faDollarSign : faHome, 'balance')}
                 {renderButton('Categorias', faChartPie, 'categories')}
                 {renderButton('Histórico', faList, 'history')}
                 {renderButton('Fluxo De Caixa', faChartBar, 'DFC')}

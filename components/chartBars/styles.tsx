@@ -23,20 +23,53 @@ export const BoxBars = styled.View`
     margin-top: 40px;
 `;
 
+export const BalanceNavigationButton = styled.TouchableOpacity`
+    width: 40px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 10px;
+    border-top-left-radius: ${props => props.isLeft ? 5 : 0}px;
+    border-top-right-radius: ${props => !props.isLeft ? 5 : 0}px;
+    border-bottom-left-radius: ${props => props.isLeft ? 5 : 0}px;
+    border-bottom-right-radius: ${props => !props.isLeft ? 5 : 0}px;
+    background-color: #fff;
+`;
+
+export const WidgetBalance = styled.View`
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin: 0px;
+    margin-top: -2px;
+    margin-bottom: 0px;
+    border-radius: 7px;
+    background-color: #c9c9c9b5;
+`;
+
 export const BoxWidget = styled.View`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-left: -10px;
     margin-right: -10px;
 `;
 
 export const BoxBarsInner = styled.View`
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: ${props => props.isVertical ? 0 : 15}px;
+    margin-right: ${props => props.isVertical ? 0 : 15}px;
     flex: 1;
     flex-direction: row;
     /* background-color: rgba(100, 100, 100, 0.1); */
@@ -46,7 +79,7 @@ export const BoxBarsChild = styled.View`
     flex: 1;
     flex-direction: row;
     margin-top: 10px;
-    margin: 1px;
+    margin: 2px;
 `;
 
 export const BoxBarLeft = styled.View`
@@ -90,9 +123,12 @@ export const RecipeLabel = styled.Text`
     font-weight: bold;
     color: #065164;
     margin-top: 5px;
-    margin-bottom: 5px;
     min-width: 120px;
-    text-align: right;
+    margin-bottom: ${props => props.isVertical ? 25 : 5}px;
+    margin-right: ${props => props.isVertical ? -25 : 0}px;
+    align-self: ${props => props.isVertical ? 'center' : 'flex-end'};
+    text-align: ${props => props.isVertical ? 'center' : 'right'};
+    transform: rotate(-${props => props.isVertical ? 90 : 0}deg);
 `;
 
 export const ExpenseLabel = styled.Text`
@@ -100,9 +136,12 @@ export const ExpenseLabel = styled.Text`
     font-weight: bold;
     color: #7e2d07;
     margin-top: 5px;
-    margin-bottom: 5px;
     min-width: 120px;
-    text-align: left;
+    margin-bottom: ${props => props.isVertical ? 25 : 5}px;
+    margin-right: ${props => props.isVertical ? -10 : 0}px;
+    align-self: ${props => props.isVertical ? 'center' : 'flex-start'};
+    text-align: ${props => props.isVertical ? 'center' : 'left'};
+    transform: rotate(-${props => props.isVertical ? 90 : 0}deg);
 `;
 
 export const Footer = styled.View`
@@ -117,8 +156,8 @@ export const Footer = styled.View`
 `;
 
 export const FooterInner = styled.View`
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: ${props => props.isVertical ? 0 : 15}px;
+    margin-right: ${props => props.isVertical ? 0 : 15}px;
     width: 100%;
     /* background-color: rgba(100, 100, 100, 0.1); */
 `;
@@ -136,6 +175,7 @@ export const BoxFooterLabelText = styled.Text`
     padding: 5px;
     font-weight: bold;
     font-size: ${props => props.fontSize || 13}px;
+    margin-bottom: 5px;
 `;
 
 export const LegendColor = styled.View`
@@ -147,7 +187,7 @@ export const LegendColor = styled.View`
 `;
 
 export const LegendText = styled.Text`
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
     margin-right: ${props => props.marginRight || 0}px;
 `;
@@ -166,6 +206,8 @@ export const BoxLegendChild = styled.View`
     justify-content: center;
     align-items: center;
     margin: 5px;
+    margin-top: 15px;
+    margin-bottom: ${props => props.isVertical ? 50 : 0}px;
 `;
 
 export const FooterLeft = styled.View`

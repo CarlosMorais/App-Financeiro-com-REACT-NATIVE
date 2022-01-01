@@ -7,6 +7,7 @@ import {
     sports_icon,
 } from './icons';
 import { COLORS } from "./theme";
+import util from "../util";
 const confirmStatus = "C"
 const pendingStatus = "P"
 
@@ -42,6 +43,49 @@ function totalExpensesTheCategory(categoryName){
     return total;
 }
 
+function DFC(month, year){
+    return [
+        {
+            recept: totalReceipt() + util.getRandomInt(0, 20000),
+            expense: totalExpenditure() + util.getRandomInt(0, 20000),
+            label: `${util.monthInAcronyms(month - 5 < 0 ? (month - 5 + 12) : month - 5).toUpperCase()}\n${month - 5 < 0 ? year - 1 : year}`,
+        },{
+            recept: totalReceipt() + util.getRandomInt(0, 20000),
+            expense: totalExpenditure() + util.getRandomInt(0, 20000),
+            label: `${util.monthInAcronyms(month - 4 < 0 ? (month - 4 + 12) : month - 4).toUpperCase()}\n${month - 4 < 0 ? year - 1 : year}`,
+        },{
+            recept: totalReceipt() + util.getRandomInt(0, 20000),
+            expense: totalExpenditure() + util.getRandomInt(0, 20000),
+            label: `${util.monthInAcronyms(month - 3 < 0 ? (month - 3 + 12) : month - 3).toUpperCase()}\n${month - 3 < 0 ? year - 1 : year}`,
+        },
+        {
+            recept: totalReceipt() + util.getRandomInt(0, 20000),
+            expense: totalExpenditure() + util.getRandomInt(0, 20000),
+            label: `${util.monthInAcronyms(month - 2 < 0 ? (month - 2 + 12) : month - 2).toUpperCase()}\n${month - 2 < 0 ? year - 1 : year}`,
+        },
+        {
+            recept: totalReceipt() + util.getRandomInt(0, 20000),
+            expense: totalExpenditure() + util.getRandomInt(0, 20000),
+            label: `${util.monthInAcronyms(month - 1 < 0 ? (month - 1 + 12) : month - 1).toUpperCase()}\n${month - 1 < 0 ? year - 1 : year}`,
+        },
+        {
+            recept: totalReceipt() + util.getRandomInt(0, 20000),
+            expense: totalExpenditure() + util.getRandomInt(0, 20000),
+            label: `${util.monthInAcronyms(month).toUpperCase()}\n${year}`,
+        }
+    ]
+}
+
+function balanceMonth(month, year){
+    return [
+        {
+            recept: totalReceipt(),
+            expense: totalExpenditure(),
+            label: `${util.monthInText(month).toUpperCase()} DE ${year}`,
+        }
+    ]
+}
+
 export const receipt = [
     {
         id: 1,
@@ -64,6 +108,7 @@ export const expenses = [
         expenses: [
             {
                 id: 1,
+                date: util.getCurrentDate(false),
                 title: "Pós-graduação",
                 description: "Pós-graduação",
                 location: "Hardward",
@@ -72,6 +117,7 @@ export const expenses = [
             },
             {
                 id: 2,
+                date: util.getCurrentDate(false),
                 title: "Livros de Javascript",
                 description: "Livros de Javascript",
                 location: "Avenida Paulista' Book Store",
@@ -80,6 +126,7 @@ export const expenses = [
             },
             {
                 id: 3,
+                date: util.getCurrentDate(false),
                 title: "Livros de PHP",
                 description: "Livros de PHP",
                 location: "Avenida Paulista' Book Store",
@@ -88,6 +135,7 @@ export const expenses = [
             },
             {
                 id: 4,
+                date: util.getCurrentDate(false),
                 title: "Livros de I.A.",
                 description: "Livros de Inteligência Artificial",
                 location: "Avenida Paulista' Book Store",
@@ -104,6 +152,7 @@ export const expenses = [
         expenses: [
             {
                 id: 5,
+                date: util.getCurrentDate(false),
                 title: "Vitaminas",
                 description: "Polivitamínico de A-Z",
                 location: "Avenida Paulista' Pharmacy",
@@ -112,6 +161,7 @@ export const expenses = [
             },
             {
                 id: 6,
+                date: util.getCurrentDate(false),
                 title: "Proteína",
                 description: "Proteína em pó",
                 location: "Avenida Paulista' Pharmacy",
@@ -120,6 +170,7 @@ export const expenses = [
             },
             {
                 id: 7,
+                date: util.getCurrentDate(false),
                 title: "Supermercado",
                 description: "Compras de supermercado do mês",
                 location: "Avenida Paulista' Hipermarket",
@@ -137,6 +188,7 @@ export const expenses = [
         expenses: [
             {
                 id: 8,
+                date: util.getCurrentDate(false),
                 title: "Combustível",
                 description: "Gazolina",
                 location: "Avenida Paulista' Posto Ipiranga",
@@ -145,6 +197,7 @@ export const expenses = [
             },
             {
                 id: 9,
+                date: util.getCurrentDate(false),
                 title: "Combustível",
                 description: "Gazolina",
                 location: "Avenida Paulista' Posto Ipiranga",
@@ -153,6 +206,7 @@ export const expenses = [
             },
             {
                 id: 10,
+                date: util.getCurrentDate(false),
                 title: "Combustível",
                 description: "Alcool",
                 location: "Avenida Paulista' Posto Ipiranga",
@@ -161,6 +215,7 @@ export const expenses = [
             },
             {
                 id: 11,
+                date: util.getCurrentDate(false),
                 title: "Oficina",
                 description: "Troca de óleo",
                 location: "Avenida Paulista' Posto Ipiranga",
@@ -177,6 +232,7 @@ export const expenses = [
         expenses: [
             {
                 id: 12,
+                date: util.getCurrentDate(false),
                 title: "Skin Care",
                 description: "Skin care",
                 location: "Avenida Paulista' Pharmacy",
@@ -185,6 +241,7 @@ export const expenses = [
             },
             {
                 id: 13,
+                date: util.getCurrentDate(false),
                 title: "Loção",
                 description: "Loção",
                 location: "Avenida Paulista' Pharmacy",
@@ -193,6 +250,7 @@ export const expenses = [
             },
             {
                 id: 14,
+                date: util.getCurrentDate(false),
                 title: "Máscara falsa",
                 description: "Máscara falsa",
                 location: "Avenida Paulista' Pharmacy",
@@ -201,6 +259,7 @@ export const expenses = [
             },
             {
                 id: 15,
+                date: util.getCurrentDate(false),
                 title: "Creme protetor solar",
                 description: "Creme protetor solar",
                 location: "Avenida Paulista' Pharmacy",
@@ -209,6 +268,7 @@ export const expenses = [
             },
             {
                 id: 16,
+                date: util.getCurrentDate(false),
                 title: "Remédios",
                 description: "Compra de remédios",
                 location: "Avenida Paulista' Pharmacy",
@@ -225,6 +285,7 @@ export const expenses = [
         expenses: [
             {
                 id: 17,
+                date: util.getCurrentDate(false),
                 title: "Associação de ginásio",
                 description: "Taxa mensal",
                 location: "Avenida Paulista' Gym",
@@ -233,6 +294,7 @@ export const expenses = [
             },
             {
                 id: 18,
+                date: util.getCurrentDate(false),
                 title: "Luvas",
                 description: "Equipamento de ginástica",
                 location: "Avenida Paulista' Gym",
@@ -241,6 +303,7 @@ export const expenses = [
             },
             {
                 id: 19,
+                date: util.getCurrentDate(false),
                 title: "Camiseta",
                 description: "Camiseta de cor lisa",
                 location: "Avenida Paulista' Mall",
@@ -249,6 +312,7 @@ export const expenses = [
             },
             {
                 id: 20,
+                date: util.getCurrentDate(false),
                 title: "Jeans",
                 description: "Jeans azul",
                 location: "Avenida Paulista' Mall",
@@ -265,4 +329,6 @@ export default {
     totalReceipt,
     totalExpenditure,
     totalExpensesTheCategory,
+    DFC,
+    balanceMonth,
 }
