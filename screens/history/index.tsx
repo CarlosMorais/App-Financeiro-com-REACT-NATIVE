@@ -1,16 +1,16 @@
 import React, { useRef, useState } from "react";
-import { Container, Row, ColumnCategory, ColumnDescription, ColumnButton, RowPrice } from "./styles";
+import { Container, Row, Column1, ColumnDescription, ColumnButton, RowPrice, BoxIcon, BoxData, DataMonth, DataDayWeek, DataDay } from "./styles";
 import { Text, View, TouchableOpacity, Image, Animated, Platform } from 'react-native';
 import { VictoryPie } from 'victory-native';
 import { Svg } from 'react-native-svg';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faChevronRight, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faEye, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import util from "../../util";
 import LightButton from '../../components/Buttons/LightButton';
 
 export default function History(props) {
-    const [limit, setLimit] = useState(20);
+    const [limit, setLimit] = useState(15);
     const [rowCount, setRowCount] = useState(0);
     const monName = new Array("janeiro", "fevereiro", "março", "abril", "Maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro")
 
@@ -23,13 +23,20 @@ export default function History(props) {
                 if (thisRowCount < limit + 1)
                     return (
                         <TouchableOpacity key={`${index - index2}`}>
-                            <Row>
-                                <ColumnCategory>
-                                    
-                                </ColumnCategory>
+                            <Row backgroundColor={thisRowCount %2 == 0 ? '#fff' : '#f9f9f9c1'}>
+                                <Column1>
+                                    <BoxIcon>
+                                        <FontAwesomeIcon icon={faCalendarAlt} size={21} color={'#333'} style={{ opacity: 0.75, }} />
+                                    </BoxIcon>
+                                    <BoxData>
+                                        <DataDay>01</DataDay>
+                                        <DataMonth>JAN</DataMonth>
+                                        {/* <DataDayWeek>Sábado</DataDayWeek> */}
+                                    </BoxData>
+                                </Column1>
                                 <ColumnDescription>
-                                    <Text style={{ color: '#333', }}>{ex.description}</Text>
-                                    <Text style={{ color: '#333', opacity: 0.35, marginTop: 5, }}>{util.dateFormat(ex.date, 3)}</Text>
+                                    <Text style={{ color: '#333', fontSize: 14}}>{ex.description}</Text>
+                                    <Text style={{ color: '#333', fontSize: 13, opacity: 0.35, marginTop: 5, }}>{util.dateFormat(ex.date, 3)}</Text>
                                 </ColumnDescription>
                                 <ColumnButton>
                                     <RowPrice style={{ color: '#333', }}>{util.numberFormat(ex.total)}</RowPrice>
@@ -59,8 +66,15 @@ export default function History(props) {
             <View style={{ flexDirection: 'column', marginTop: 25, marginLeft: -20, marginRight: -20 }}>
                 {renderList(transactions.expenses)}
             </View>
-            <LightButton icon={faEye} label={'VER MAIS'} onPress={() => {setLimit(limit + 20)}}/>
-        </View>
+            <View style={{
+                marginLeft: -5,
+                marginRight: -5,
+                marginTop: 30,
+                marginBottom: 70,
+            }}>
+                <LightButton icon={faEye} label={'VER MAIS'} onPress={() => { setLimit(limit + 15) }} />
+            </View>
+        </View >
 
     )
 }

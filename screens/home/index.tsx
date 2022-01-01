@@ -22,24 +22,29 @@ const Home = () => {
     const [pageActive, setPageActive] = React.useState('balance')
 
     return (
+
         <ImageBackground source={images.bgHeader} resizeMode="cover" style={styles.imageBgHeader}>
-            <ScrollView contentContainerStyle={{ 
-                // minHeight: SIZES.height * 1
-                }}>
-                <SafeAreaView style={{ flex: 0 }} />
-                <SafeAreaView style={{ 
-                    flex: 1, 
+            <SafeAreaView style={{ flex: 0, }} />
+            <ScrollView contentContainerStyle={{
+                // flex: 1,
+                minHeight: (SIZES.height * 1) + (Platform.OS == 'ios' ? 0 :  + 30),
+                paddingTop: Platform.OS == 'ios' ? 0 : 35,
+            }}>
+                {/* <SafeAreaView style={{ flex: 0 }} /> */}
+                <View style={{
+                    flex: 1,
                     minHeight: '100%',
-                    }}>
+                }}>
 
 
                     <View style={{
-                        display: 'flex', 
-                        flexDirection: 'column', 
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
                         minHeight: '100%',
-                        }}>
+                    }}>
                         {/* Nav bar section */}
                         {/* <NavBar/> */}
 
@@ -55,9 +60,8 @@ const Home = () => {
                         />
                     </View>
 
-                </SafeAreaView>
+                </View>
             </ScrollView>
-            {/* <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.white }} /> */}
         </ImageBackground>
     )
 }

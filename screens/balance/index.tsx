@@ -29,7 +29,7 @@ export default function Balance(props) {
                 <ChartBars
                     data={transactions.balanceMonth(month, year)}
                     handleNext={() => {
-                        if (month < new Date().getMonth() && year <= new Date().getFullYear()) {
+                        if (`${year}${month}` < `${new Date().getFullYear()}${new Date().getMonth()}`) {
                             setYear(month == 11 ? year + 1 : year);
                             setMonth(month >= 11 ? 0 : month + 1);
                         }

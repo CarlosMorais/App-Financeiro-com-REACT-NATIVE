@@ -62,7 +62,7 @@ export const BoxWidget = styled.View`
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     margin-left: -10px;
     margin-right: -10px;
 `;

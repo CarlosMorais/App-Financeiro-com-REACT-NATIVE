@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Container } from "./styles";
-import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { Text, View, Platform, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBell, faDollarSign, faHome, faChartPie, faChartBar, faList, faBars, faPlus, faSortDown } from '@fortawesome/free-solid-svg-icons'

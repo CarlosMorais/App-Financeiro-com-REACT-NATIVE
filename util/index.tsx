@@ -1,3 +1,6 @@
+import 'intl';
+import 'intl/locale-data/jsonp/en'; // or any other locale you need
+
 function currencyFormat(num) {
   return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
@@ -38,10 +41,10 @@ const clearNumber = (number, commaToPoint = true) => {
   return number;
 }
 
-function numberFormat(number, clearNumber_ = false, clearNumberCommaToPoint = true) {
+function numberFormat(number, clearnumber = false, clearNumberCommaToPoint = true) {
   number = forNumberFormat(number);
-  if (clearNumber_)
-    number = clearNumber(number, clearNumberCommaToPoint);
+  // if (clearnumber == true)
+  //   number = clearNumber(number, clearNumberCommaToPoint);
 
   return number;
 }
@@ -73,13 +76,26 @@ function isHidden(el) {
 }
 
 function capitalize(txt) {
-	return txt.charAt(0).toUpperCase() + txt.substr(1);
+  return txt.charAt(0).toUpperCase() + txt.substr(1);
 }
 
 function dateFormat(date, type = 1) {
+  if (!date || date.length != 10)
+    return date;
+
   var day = date.substring(8, 10),
     month = date.substring(5, 7),
     year = date.substring(0, 4);
+
+  if (parseInt(day) < 10)
+    day = `0${parseInt(day)}`;
+  if (parseInt(month) < 10)
+    month = `0${parseInt(month)}`;
+
+  // console.log('dateFormat.date:', month);
+  // console.log('day:', month);
+  // console.log('month:', month);
+  // console.log('year:', month);
 
   let result;
   if (type == 1)
@@ -102,7 +118,7 @@ const getCurrentDate = (isBR = true) => {
 
   //Alert.alert(date + '-' + month + '-' + year);
   // You can turn it in to your desired format
-  return isBR ? day + '/' + month + '/' + year : year + '-' + month + '-' + day;//format: dd-mm-yyyy;
+  return isBR ? (day < 10 ? `0${day}` : day) + '/' + (month < 10 ? `0${month}` : month) + '/' + year : year + '-' + (month < 10 ? `0${month}` : month) + '-' + (day < 10 ? `0${day}` : day);//format: dd-mm-yyyy;
 }
 
 export default {

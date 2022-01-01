@@ -2,8 +2,8 @@ import React, { useRef } from "react";
 import { Container, WidgetBalance, BalanceNavigationButton, Top, BoxBars, BoxWidget, BoxBarsInner, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeBar, RecipeLabel, BoxLegend, BoxLegendChild, ExpenseLabel, ExpenseBar, Footer, FooterInner, LegendColor, LegendText, BoxFooterLabels, BoxFooterLabelText, FooterLeft, FooterRight } from "./styles";
 import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faChevronLeft, faChevronRight, faDollarSign } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faChevronLeft, faChevronRight, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import util from '../../util';
 
 

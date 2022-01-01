@@ -28,7 +28,8 @@ export default function BodyApp(props) {
         <View style={{
             flex: 1,
             paddingHorizontal: SIZES.padding,
-            marginBottom: SIZES.borderRadiusBody + 15,
+            // marginBottom: SIZES.borderRadiusBody + 15,
+            marginBottom: 0,
             backgroundColor: '#fff', 
             marginTop: (SIZES.borderRadiusBody + 5) * -1 ,
             borderTopLeftRadius: SIZES.borderRadiusBody,
@@ -36,7 +37,8 @@ export default function BodyApp(props) {
             flexDirection: 'column', 
             width: '100%',
             display: "flex",
-            padding: SIZES.padding, 
+            // padding: SIZES.padding, 
+            padding: 20,
         }}>
             {renderBody(pageActive)}
         </View>

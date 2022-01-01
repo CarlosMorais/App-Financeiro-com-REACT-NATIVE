@@ -12,11 +12,12 @@ export default function DFC(props) {
     const [year, setYear] = useState(new Date().getFullYear());
 
     return (
-        <View style={{ 
-            flexDirection: 'column', 
-            display: 'flex', 
+        <View style={{
+            flexDirection: 'column',
+            display: 'flex',
             justifyContent: 'flex-start',
-            height: '100%', }}>
+            height: '100%',
+        }}>
             <View style={{ flexDirection: 'row', }}>
                 {/* Title */}
                 <View>
@@ -24,19 +25,19 @@ export default function DFC(props) {
                     <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Relatório de Demonstrativo de Fluxo de Caixa</Text>
                 </View>
             </View>
-            <View style={{flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20}}>
-                <ChartBars 
-                data={transactions.DFC(month, year)}
-                handleNext={()=>{
-                    if(month < new Date().getMonth() && year <= new Date().getFullYear()){
-                        setYear(month == 11 ? year + 1 : year);
-                        setMonth(month >= 11 ? 0 : month + 1);
-                    }
-                }}
-                handlePrevious={()=>{
-                    setYear(month == 0 ? year - 1 : year);
-                    setMonth(month == 0 ? 11 : month - 1)
-                }}
+            <View style={{ flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20 }}>
+                <ChartBars
+                    data={transactions.DFC(month, year)}
+                    handleNext={() => {
+                        if (`${year}${month}` < `${new Date().getFullYear()}${new Date().getMonth()}`) {
+                            setYear(month == 11 ? year + 1 : year);
+                            setMonth(month >= 11 ? 0 : month + 1);
+                        }
+                    }}
+                    handlePrevious={() => {
+                        setYear(month == 0 ? year - 1 : year);
+                        setMonth(month == 0 ? 11 : month - 1)
+                    }}
                 />
             </View>
         </View>

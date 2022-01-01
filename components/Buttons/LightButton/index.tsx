@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Container } from "./styles";
 import { TouchableOpacity, Text } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function LightButton(props) {
     const { icon = '', label = '', onPress = () => {} } = props;
@@ -16,10 +16,6 @@ export default function LightButton(props) {
                     borderWidth: 1,
                     padding: 5,
                     borderRadius: 5,
-                    marginLeft: -5,
-                    marginRight: -5,
-                    marginTop: 30,
-                    marginBottom: 70,
                 }}
                 onPress={() => { onPress() }}>
                 <FontAwesomeIcon icon={icon} size={35} color={'#c9c9c9'} style={{ opacity: 0.85, marginLeft: 10, marginRight: 20, }} />
