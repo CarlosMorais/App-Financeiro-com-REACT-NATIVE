@@ -5,10 +5,13 @@ import { VictoryPie } from 'victory-native';
 import util from '../../util';
 import { Svg } from 'react-native-svg';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 
 export default function Categories(props) {
-    const categoryListHeightAnimationValue = useRef(new Animated.Value(69)).current;
-    const [categoryList, setCategoryList] = React.useState(transactions.expenses)
+    const transactionListHeightAnimationValue = useRef(new Animated.Value(70)).current;
+    const [categoryList, setCategoryList] = React.useState(transactions.categories)
+    const [transactionList, setTransactionList] = React.useState(transactions.expensesList())
     const [viewMode, setViewMode] = React.useState("chart")
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [showMoreToggle, setShowMoreToggle] = React.useState(false)
@@ -18,14 +21,13 @@ export default function Categories(props) {
     }, []);
 
     useEffect(() => {
-        // console.log('selectedCategory:',selectedCategory)
     }, [selectedCategory]);
 
-    function renderCategoryList() {
+    function renderTransactionList() {
 
-        const renderItem = ( item, index ) => (
+        const renderItem = (item, index) => (
             <TouchableOpacity
-                key={'renderCategoryList' + index}
+                key={'renderTransactionList' + index}
                 onPress={() => setSelectedCategory(item)}
                 style={{
                     flexDirection: 'row',
@@ -36,28 +38,27 @@ export default function Categories(props) {
                     borderRadius: 5,
                     backgroundColor: COLORS.white,
                     width: '48%',
+                    maxHeight: 50,
                     ...styles.shadow
-                }}
-            >
-                <Image
-                    source={item.icon}
-                    style={{
-                        width: 20,
-                        height: 20,
-                        tintColor: item.color
-                    }}
-                />
+                }}>
+                <FontAwesomeIcon icon={item.icon} size={21} color={item.color} style={{ opacity: 0.75, }} />
                 <Text style={{ marginLeft: SIZES.base, color: COLORS.primary, ...FONTS.h4 }}>{item.name}</Text>
             </TouchableOpacity>
         )
 
         return (
             <View style={{ paddingHorizontal: SIZES.padding - 5 }}>
-                <Animated.View style={{ height: categoryListHeightAnimationValue,
-                flexDirection: 'row', flexWrap: 'wrap',}}>
-                    {categoryList && categoryList.length && categoryList.map((item, index)=>{
-                        return renderItem(item, index)
-                    })}
+                <Animated.View style={{
+                    height: transactionListHeightAnimationValue,
+                    flexDirection: 'row', flexWrap: 'wrap',
+                }}>
+                    <ScrollView style={{ width: '100%', flexDirection: 'column',  }} horizontal={false}>
+                        <View style={{ minWidth: '100%', flexDirection: 'row', flexWrap: 'wrap',}}>
+                            {categoryList && categoryList.length && categoryList.map((item, index) => {
+                                return renderItem(item, index)
+                            })}
+                        </View>
+                    </ScrollView>
                 </Animated.View>
 
                 <TouchableOpacity
@@ -74,14 +75,14 @@ export default function Categories(props) {
                     }}
                     onPress={() => {
                         if (showMoreToggle) {
-                            Animated.timing(categoryListHeightAnimationValue, {
-                                toValue: 69,
+                            Animated.timing(transactionListHeightAnimationValue, {
+                                toValue: 70,
                                 duration: 500,
                                 useNativeDriver: false
                             }).start()
                         } else {
-                            Animated.timing(categoryListHeightAnimationValue, {
-                                toValue: 125,
+                            Animated.timing(transactionListHeightAnimationValue, {
+                                toValue: 130,
                                 duration: 500,
                                 useNativeDriver: false
                             }).start()
@@ -111,21 +112,22 @@ export default function Categories(props) {
     }
 
     function renderIncomingExpenses() {
-        let allExpenses = selectedCategory ? selectedCategory.expenses : []
-        let incomingExpenses = allExpenses.filter(a => a.status !== "")
+        let allExpenses = transactionList && transactionList.length ? transactionList : []
+        let incomingExpenses = transactionList.filter(a => a.idCategory === selectedCategory.id)
 
-        const renderItem = ( item, index ) => (
-            <View 
-            key={'renderIncomingExpenses' + index + item.id}
-            style={{
-                width: 300,
-                marginRight: SIZES.padding,
-                marginLeft: index == 0 ? SIZES.padding : 0,
-                marginVertical: SIZES.radius,
-                borderRadius: SIZES.radius,
-                backgroundColor: COLORS.white,
-                ...styles.shadow
-            }}>
+        const renderItem = (item, index) => (
+            <View
+                key={'renderIncomingExpenses' + index + item.id}
+                style={{
+                    width: 300,
+                    marginRight: SIZES.padding,
+                    marginLeft: index == 0 ? SIZES.padding : 0,
+                    marginVertical: SIZES.radius,
+                    borderRadius: SIZES.radius,
+                    backgroundColor: COLORS.white,
+                    ...styles.shadow,
+                    paddingBottom: 0,
+                }}>
                 {/* Title */}
                 <View style={{ flexDirection: 'row', padding: SIZES.padding, alignItems: 'center' }}>
                     <View
@@ -137,23 +139,15 @@ export default function Categories(props) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             marginRight: SIZES.base
-                        }}
-                    >
-                        <Image
-                            source={selectedCategory.icon}
-                            style={{
-                                width: 30,
-                                height: 30,
-                                tintColor: selectedCategory.color
-                            }}
-                        />
+                        }}>
+                        <FontAwesomeIcon icon={selectedCategory.icon || faExclamation} size={21} color={selectedCategory.color} style={{ opacity: 0.95, }} />
                     </View>
 
                     <Text style={{ ...FONTS.h3, color: selectedCategory.color, }}>{selectedCategory.name}</Text>
                 </View>
 
                 {/* Expense Description */}
-                <View style={{ paddingHorizontal: SIZES.padding }}>
+                <View style={{ paddingHorizontal: SIZES.padding, marginTop: -15, }}>
                     {/* Title and description */}
                     <Text style={{ ...FONTS.h2, }}>{item.title}</Text>
                     <Text style={{ ...FONTS.body3, flexWrap: 'wrap', color: COLORS.darkgray }}>
@@ -161,7 +155,7 @@ export default function Categories(props) {
                     </Text>
 
                     {/* Location */}
-                    <Text style={{ marginTop: SIZES.padding, ...FONTS.h4, }}>Location</Text>
+                    <Text style={{ marginTop: 15, ...FONTS.h4, }}>Location</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <Image
                             source={icons.pin}
@@ -179,15 +173,17 @@ export default function Categories(props) {
                 {/* Price */}
                 <View
                     style={{
-                        height: 50,
                         alignItems: 'center',
                         justifyContent: 'center',
                         borderBottomStartRadius: SIZES.radius,
                         borderBottomEndRadius: SIZES.radius,
                         backgroundColor: selectedCategory.color,
-                    }}
-                >
-                    <Text style={{ color: COLORS.white, ...FONTS.body3 }}>CONFIRM {util.numberFormat(item.total)}</Text>
+                        padding: 12,
+                        marginTop: 10,
+                        maxHeight: 50,
+                        marginBottom: 0,
+                    }}>
+                    <Text style={{ color: COLORS.white, ...FONTS.body3, }}>{util.numberFormat(item.total)}</Text>
                 </View>
             </View>
         )
@@ -196,9 +192,9 @@ export default function Categories(props) {
             <View>
                 {renderIncomingExpensesTitle()}
 
-                <ScrollView style={{width: '100%', flexDirection: 'row'}} horizontal={true}>
-                    <View style={{minWidth: '105%', flexDirection: 'row'}}>
-                        {incomingExpenses && incomingExpenses.length && incomingExpenses.map((item, index)=>{
+                <ScrollView style={{ width: '100%', flexDirection: 'row' }} horizontal={true}>
+                    <View style={{ minWidth: '105%', flexDirection: 'row' }}>
+                        {incomingExpenses && incomingExpenses.length && incomingExpenses.map((item, index) => {
                             return renderItem(item, index)
                         })}
                     </View>
@@ -219,7 +215,7 @@ export default function Categories(props) {
     function renderExpenseSummary() {
         let data = processCategoryDataToDisplay()
 
-        const renderItem = ( item , index) => (
+        const renderItem = (item, index) => (
             <TouchableOpacity
                 key={'renderExpenseSummary' + index + item.id}
                 style={{
@@ -230,8 +226,8 @@ export default function Categories(props) {
                     backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? item.color : COLORS.white
                 }}
                 onPress={() => {
-                    let categoryName = item.name
-                    setSelectCategoryByName(categoryName)
+                    let categoryID = item.id
+                    setSelectCategoryByName(categoryID)
                 }}
             >
                 {/* Name/Category */}
@@ -250,14 +246,14 @@ export default function Categories(props) {
 
                 {/* Expenses */}
                 <View style={{ justifyContent: 'center' }}>
-                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{util.numberFormat(transactions.totalExpensesTheCategory(item.name))} - {item.label}</Text>
+                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{util.numberFormat(transactions.totalExpensesTheCategory(item.id))} - {item.label}</Text>
                 </View>
             </TouchableOpacity>
         )
 
         return (
             <View style={{ padding: SIZES.padding }}>
-                {data && data.length && data.map((item, index)=>{
+                {data && data.length && data.map((item, index) => {
                     return renderItem(item, index)
                 })}
             </View>
@@ -265,23 +261,23 @@ export default function Categories(props) {
         )
     }
 
-
     function processCategoryDataToDisplay() {
         // Filter expenses with "Confirmed" status
         let chartData = categoryList.map((item) => {
-            let confirmExpenses = item.expenses.filter(a => a.status !== "")
-            var total = confirmExpenses.reduce((a, b) => a + (b.total || 0), 0)
+            let items = transactionList.filter(a => a.idCategory !== item.id)
+            var total = transactions.totalExpensesTheCategory(item.id)
+            // var total = items.reduce((a, b) => a + (b.total || 0), 0)
 
             return {
                 name: item.name,
                 y: total,
-                expenseCount: confirmExpenses.length,
+                expenseCount: items.length,
                 color: item.color,
                 id: item.id
             }
         })
 
-        // filter out categoryList with no data/expenses
+        // filter out transactionList with no data/expenses
         let filterChartData = chartData.filter(a => a.y > 0)
 
         // Calculate the total expenses
@@ -303,20 +299,18 @@ export default function Categories(props) {
         return finalChartData
     }
 
-    function setSelectCategoryByName(name) {
-        let category = name === null ? categoryList : categoryList.filter(a => a.name == name)
-        setSelectedCategory(category[0])
+    function setSelectCategoryByName(id) {
+        setSelectedCategory(id == null ? categoryList[0] : transactions.dataCategory(id))
     }
 
     function renderChart() {
 
         let chartData = processCategoryDataToDisplay()
         let colorScales = chartData.map((item) => item.color)
-        let totalExpenseCount = chartData.reduce((a, b) => a + (b.expenseCount || 0), 0)
+        let totalExpenseCount = chartData.reduce((a, b) => a + (b.y || 0), 0)
 
-        function selectedCategoryTotal(selectedCategory){
-            if(selectedCategory && selectedCategory.expenses && selectedCategory.expenses.length)   
-                return util.numberFormat(transactions.totalExpensesTheCategory(selectedCategory.name))
+        function selectedCategoryTotal(selectedCategory) {
+            return selectedCategory && selectedCategory.id ? transactions.totalExpensesTheCategory(selectedCategory.id) : 0;
         }
 
         if (Platform.OS == 'ios') {
@@ -325,7 +319,7 @@ export default function Categories(props) {
                     <VictoryPie
 
                         data={chartData}
-                        labels={(datum) => `${datum.y}`}
+                        labels={(datum) => `${util.dateFormat(datum.y)}`}
                         radius={({ datum }) => (selectedCategory && selectedCategory.name == datum.name) ? SIZES.width * 0.4 : SIZES.width * 0.4 - 10}
                         innerRadius={90}
                         labelRadius={({ innerRadius }) => ((SIZES.width * 0.4) + innerRadius) / 2.5}
@@ -345,8 +339,8 @@ export default function Categories(props) {
                                     return [{
                                         target: "labels",
                                         mutation: (props) => {
-                                            let categoryName = chartData[props.index].name
-                                            setSelectCategoryByName(categoryName)
+                                            let categoryId = chartData[props.index].id
+                                            setSelectCategoryByName(categoryId)
                                         }
                                     }]
                                 }
@@ -354,9 +348,8 @@ export default function Categories(props) {
                         }]}
 
                     />
-
-<View style={{ position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ ...FONTS.h2, textAlign: 'center' }}>{selectedCategoryTotal(selectedCategory)}</Text>
+                    <View style={{ position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ ...FONTS.h2, textAlign: 'center' }}>{util.numberFormat(selectedCategoryTotal(selectedCategory))}</Text>
                         <Text style={{ ...FONTS.body3, textAlign: 'center' }}>{selectedCategory && selectedCategory.name}</Text>
                     </View>
                 </View>
@@ -372,7 +365,7 @@ export default function Categories(props) {
                         <VictoryPie
                             standalone={false} // Android workaround
                             data={chartData}
-                            labels={(datum) => `${datum.y}`}
+                            labels={(datum) => `${util.numberFormat(datum.y)}`}
                             radius={({ datum }) => (selectedCategory && selectedCategory.name == datum.name) ? SIZES.width * 0.4 : SIZES.width * 0.4 - 10}
                             innerRadius={90}
                             labelRadius={({ innerRadius }) => (SIZES.width * 0.4 + innerRadius) / 2.5}
@@ -392,18 +385,18 @@ export default function Categories(props) {
                                         return [{
                                             target: "labels",
                                             mutation: (props) => {
-                                                let categoryName = chartData[props.index].name
-                                                setSelectCategoryByName(categoryName)
+                                                let categoryId = chartData[props.index].id
+                                                setSelectCategoryByName(categoryId)
                                             }
                                         }]
                                     }
                                 }
                             }]}
 
-                        /> 
+                        />
                     </Svg>
                     <View style={{ position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ ...FONTS.h2, textAlign: 'center' }}>{selectedCategoryTotal(selectedCategory)}</Text>
+                        <Text style={{ ...FONTS.h2, textAlign: 'center' }}>{util.numberFormat(selectedCategoryTotal(selectedCategory))}</Text>
                         <Text style={{ ...FONTS.body3, textAlign: 'center' }}>{selectedCategory && selectedCategory.name}</Text>
                     </View>
                 </View>
@@ -412,12 +405,12 @@ export default function Categories(props) {
 
     }
 
-    function renderContent(viewMode){
-        switch(viewMode){
+    function renderContent(viewMode) {
+        switch (viewMode) {
             case 'list':
                 return (
                     <View>
-                        {renderCategoryList()}
+                        {renderTransactionList()}
                         {renderIncomingExpenses()}
                     </View>
                 )
@@ -440,7 +433,7 @@ export default function Categories(props) {
                 {/* Title */}
                 <View>
                     <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>CATEGORIAS EM {new Date().getMonth() + 1}/{new Date().getFullYear()}</Text>
-                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>{categoryList.length} Total</Text>
+                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>{transactionList.length} Total</Text>
                 </View>
 
                 {/* Button */}
@@ -490,7 +483,7 @@ export default function Categories(props) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{ flexDirection: 'column', marginTop: 25, marginLeft: -20, marginRight: -20}}>
+            <View style={{ flexDirection: 'column', marginTop: 25, marginLeft: -20, marginRight: -20 }}>
                 {renderContent(viewMode)}
             </View>
         </View>

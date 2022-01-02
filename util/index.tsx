@@ -46,6 +46,20 @@ function numberFormat(number, clearnumber = false, clearNumberCommaToPoint = tru
   // if (clearnumber == true)
   //   number = clearNumber(number, clearNumberCommaToPoint);
 
+  while (number.indexOf('R$') > -1 && number.indexOf('R$ ') === -1)
+    number = number.replace('R$', 'R$ ');
+  while (number.indexOf('  ') > -1)
+    number = number.replace('  ', ' ');
+
+  if (number.substring(number.length - 3, number.length - 2) == '.') {
+    while (number.indexOf('.') > -1)
+      number = number.replace('.', '|||');
+    while (number.indexOf(',') > -1)
+      number = number.replace(',', '.');
+    while (number.indexOf('|||') > -1)
+      number = number.replace('|||', ',');
+  }
+
   return number;
 }
 
@@ -79,23 +93,30 @@ function capitalize(txt) {
   return txt.charAt(0).toUpperCase() + txt.substr(1);
 }
 
+function getDay(date) {
+  return date && date.length >= 10 ? date.substring(8, 10) : date;
+}
+
+function getMonth(date) {
+  return date.substring(5, 7);
+}
+
+function getYear(date) {
+  return date.substring(0, 4);
+}
+
 function dateFormat(date, type = 1) {
   if (!date || date.length != 10)
     return date;
 
-  var day = date.substring(8, 10),
-    month = date.substring(5, 7),
-    year = date.substring(0, 4);
+  var day = getDay(date);
+  var month = getMonth(date);
+  var year = getYear(date);
 
   if (parseInt(day) < 10)
     day = `0${parseInt(day)}`;
   if (parseInt(month) < 10)
     month = `0${parseInt(month)}`;
-
-  // console.log('dateFormat.date:', month);
-  // console.log('day:', month);
-  // console.log('month:', month);
-  // console.log('year:', month);
 
   let result;
   if (type == 1)
@@ -121,7 +142,45 @@ const getCurrentDate = (isBR = true) => {
   return isBR ? (day < 10 ? `0${day}` : day) + '/' + (month < 10 ? `0${month}` : month) + '/' + year : year + '-' + (month < 10 ? `0${month}` : month) + '-' + (day < 10 ? `0${day}` : day);//format: dd-mm-yyyy;
 }
 
+function randomDate(days = 1) {
+  var randomNumber = getRandomInt(1, Math.abs(days)) * (days < 0 ? -1 : 1);
+  var date = addDate(null, randomNumber);
+
+  var day = String(new Date(date).getDate());
+  var month = String(new Date(date).getMonth() + 1);
+  var year = String(new Date(date).getFullYear());
+
+
+  if (parseInt(day) < 10)
+    day = `0${parseInt(day)}`;
+  if (parseInt(month) < 10)
+    month = `0${parseInt(month)}`;
+
+  var newDate = `${year}-${month}-${day}`;
+  // console.log(`
+  // \n\n#####
+  // randomDate(${days})
+  // randomNumber: ${randomNumber}
+  // date: ${date}
+  // day: ${day}
+  // month: ${month}
+  // year: ${year}
+  // newDate: ${newDate}
+  // `)
+
+  return newDate;
+}
+
+function addDate(date = null, x = 1) {
+  if (date == null) date = new Date();
+  var d = new Date(date);
+  d.setDate(x + d.getDate());
+  return d;
+}
+
 export default {
+  addDate,
+  randomDate,
   capitalize,
   dateFormat,
   getCurrentDate,
@@ -134,4 +193,7 @@ export default {
   monthInText,
   monthInAcronyms,
   dayWeek,
+  getDay,
+  getMonth,
+  getYear,
 }

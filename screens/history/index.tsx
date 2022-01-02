@@ -15,43 +15,38 @@ export default function History(props) {
     const monName = new Array("janeiro", "fevereiro", "março", "abril", "Maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro")
 
     function renderList(data) {
-        let thisRowCount = 0;
         let list = data && data.length && data.map((item, index) => {
-            return item.expenses && item.expenses.length && item.expenses.map((ex, index2) => {
-                thisRowCount++;
-
-                if (thisRowCount < limit + 1)
-                    return (
-                        <TouchableOpacity key={`${index - index2}`}>
-                            <Row backgroundColor={thisRowCount %2 == 0 ? '#fff' : '#f9f9f9c1'}>
-                                <Column1>
-                                    <BoxIcon>
-                                        <FontAwesomeIcon icon={faCalendarAlt} size={21} color={'#333'} style={{ opacity: 0.75, }} />
-                                    </BoxIcon>
-                                    <BoxData>
-                                        <DataDay>01</DataDay>
-                                        <DataMonth>JAN</DataMonth>
-                                        {/* <DataDayWeek>Sábado</DataDayWeek> */}
-                                    </BoxData>
-                                </Column1>
-                                <ColumnDescription>
-                                    <Text style={{ color: '#333', fontSize: 14}}>{ex.description}</Text>
-                                    <Text style={{ color: '#333', fontSize: 13, opacity: 0.35, marginTop: 5, }}>{util.dateFormat(ex.date, 3)}</Text>
-                                </ColumnDescription>
-                                <ColumnButton>
-                                    <RowPrice style={{ color: '#333', }}>{util.numberFormat(ex.total)}</RowPrice>
-                                    <TouchableOpacity
-                                        onPress={() => { }}>
-                                        <FontAwesomeIcon icon={faChevronRight} size={22} color={'#c9c9c9'} style={{ opacity: 0.9, marginLeft: 5, }} />
-                                    </TouchableOpacity>
-                                </ColumnButton>
-                            </Row>
-                        </TouchableOpacity>
-                    );
-            })
+            const dataCategory = transactions.dataCategory(item.idCategory);
+            if (index < limit + 1)
+                return (
+                    <TouchableOpacity key={`${index}`}>
+                        <Row index={index} backgroundColor={(index + 1) % 2 == 0 ? '#fff' : '#c0c0c01d'}>
+                            <Column1>
+                                <BoxIcon>
+                                    <FontAwesomeIcon icon={dataCategory.icon} size={21} color={'#020403'} style={{ opacity: 0.95, }} />
+                                </BoxIcon>
+                                <BoxData>
+                                    <DataDay >{util.getDay(item.date)}</DataDay>
+                                    <DataMonth>{util.monthInAcronyms(util.getMonth(item.date) - 1)}</DataMonth>
+                                    {/* <DataDayWeek>Sábado</DataDayWeek> */}
+                                </BoxData>
+                            </Column1>
+                            <ColumnDescription>
+                                <Text style={{ color: '#020202', fontSize: 14 }}>{item.description}</Text>
+                                <Text style={{ color: '#76767e', fontSize: 13, opacity: 0.75, marginTop: 5, }}>{dataCategory.name}</Text>
+                            </ColumnDescription>
+                            <ColumnButton>
+                                <RowPrice style={{ color: '#020202', opacity: 0.8, }}>{util.numberFormat(item.total)}</RowPrice>
+                                <TouchableOpacity
+                                    onPress={() => { }}>
+                                    <FontAwesomeIcon icon={faChevronRight} size={22} color={'#c9c9c9'} style={{ opacity: 0.9, marginLeft: 5, }} />
+                                </TouchableOpacity>
+                            </ColumnButton>
+                        </Row>
+                    </TouchableOpacity>
+                );
         })
 
-        // setRowCount(thisRowCount);
         return list;
     }
     return (
@@ -63,8 +58,8 @@ export default function History(props) {
                     <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Histórico de receitas e despesas</Text>
                 </View>
             </View>
-            <View style={{ flexDirection: 'column', marginTop: 25, marginLeft: -20, marginRight: -20 }}>
-                {renderList(transactions.expenses)}
+            <View style={{ flexDirection: 'column', marginTop: 25, marginLeft: -30, marginRight: -30 }}>
+                {renderList(transactions.expensesList())}
             </View>
             <View style={{
                 marginLeft: -5,

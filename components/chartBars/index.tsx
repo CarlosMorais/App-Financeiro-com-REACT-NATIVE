@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Container, WidgetBalance, BalanceNavigationButton, Top, BoxBars, BoxWidget, BoxBarsInner, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeBar, RecipeLabel, BoxLegend, BoxLegendChild, ExpenseLabel, ExpenseBar, Footer, FooterInner, LegendColor, LegendText, BoxFooterLabels, BoxFooterLabelText, FooterLeft, FooterRight } from "./styles";
-import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, Image, Dimensions, Platform } from 'react-native';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faChevronRight, faDollarSign } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +16,18 @@ export default function ChartBars(props) {
             return true;
         else
             return false;
+    }
+
+    function getBalance(data){
+        let totalReceipt = 0;
+        let totalExpense = 0;
+
+        data && data.length && data.map((item)=>{
+            totalReceipt += item.recept;
+            totalExpense += item.expense;
+        })
+
+        return totalReceipt - totalExpense;
     }
 
     function renderBars(data, isFooter = false) {
@@ -171,7 +183,7 @@ export default function ChartBars(props) {
 
 
     return (
-        <Container>
+        <Container style={{ marginBottom: Platform.OS == 'ios' ? 25 : 0 }}>
             <Top>
                 <BoxLegend>
                     <BoxLegendChild isVertical={isVertical(data)}>
@@ -196,7 +208,7 @@ export default function ChartBars(props) {
                     </BoxFooterLabels>
                     <BoxWidget>
                         {renderNavigationButton(faChevronLeft)}
-                        {renderBalance(util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure()), data)}
+                        {renderBalance(util.numberFormat(getBalance(data)), data)}
                         {renderNavigationButton(faChevronRight, false)}
                     </BoxWidget>
                 </FooterInner>

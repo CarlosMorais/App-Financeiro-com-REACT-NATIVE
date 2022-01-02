@@ -31,7 +31,7 @@ export default function BodyApp(props) {
             // marginBottom: SIZES.borderRadiusBody + 15,
             marginBottom: 0,
             backgroundColor: '#fff', 
-            marginTop: (SIZES.borderRadiusBody + 5) * -1 ,
+            marginTop: (SIZES.borderRadiusBody + 20) * -1 ,
             borderTopLeftRadius: SIZES.borderRadiusBody,
             borderTopRightRadius: SIZES.borderRadiusBody,
             flexDirection: 'column', 

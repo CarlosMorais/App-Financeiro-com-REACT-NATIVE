@@ -13,11 +13,13 @@ export const Row = styled.View`
   align-items: center;
   min-height: 61px;
   border-top-width: 1px;
-  border-top-color: #f0f0f0ba;
-  margin-left: 10px;
-  margin-right: 10px;
+  border-top-color: ${props => props.backgroundColor == '#fff' ? '#9995951d' : '#99959511'};
+  margin-left: 5px;
+  margin-right: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
   background-color: ${props => props.backgroundColor || 'transparent'};
 `;
 
@@ -45,25 +47,28 @@ export const BoxData = styled.View`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 0px;
+  margin-left: 5px;
+  margin-bottom: 1px;
+  margin-top: -2px;
   margin-right: 10px;
 `;
 
 export const DataDay = styled.Text`
-  font-size: 21px;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: -5px;
+  margin-top: -5px;
   margin: 0px;
-  color: #333;
-  opacity: 0.61;
+  color: ${props => props.color || '#333'};
+  opacity: 0.55;
 `;
 
 export const DataMonth = styled.Text`
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   margin: 0px;
-  color: #333;
-  opacity: 0.61;
+  color: ${props => props.color || '#333'};
+  opacity: 0.55;
 `;
 
 

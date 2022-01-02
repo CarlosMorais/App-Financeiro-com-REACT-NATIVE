@@ -11,9 +11,9 @@ import util from "../../util";
 export default function Header(props) {
     const { pageActive, setPageActive } = props;
 
-    function renderButton(label, icon, page = 'balance') {
+    function renderButton(label, icon, page = 'balance', fongSize = 11) {
         const width = (Dimensions.get('window').width - 120) / 4;
-        const height = width;
+        const height = width + 10;
 
         return (
             <TouchableOpacity
@@ -25,7 +25,7 @@ export default function Header(props) {
                     alignItems: 'center',
                     paddingVertical: 5,
                     paddingHorizontal: 5,
-                    paddingTop: 10,
+                    paddingTop: 14,
                     margin: 5,
                     minWidth: width,
                     minHeight: height,
@@ -35,9 +35,9 @@ export default function Header(props) {
                     borderBottomWidth: 3,
                     borderBottomColor: page === pageActive ? COLORS.secondary : 'transparent',
                 }}>
-                <FontAwesomeIcon icon={icon} size={35} color={COLORS.secondary} />
+                <FontAwesomeIcon icon={icon} size={30} color={COLORS.secondary} />
                 <View style={{ width: '100%', minHeight: 27, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ fontSize: 11, minWidth: 30, marginTop: 3, textAlign: 'center', width: '100%' }}>{label}</Text>
+                    <Text style={{ fontSize: fongSize, minWidth: 30, marginTop: 3, textAlign: 'center', width: '100%' }}>{label}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -83,7 +83,7 @@ export default function Header(props) {
                         alignItems: 'center',
                         width: '100%',
                         justifyContent: 'space-between',
-                        borderRadius: 25,
+                        borderRadius: 50,
                         backgroundColor: 'rgba(255,255,255,0.2)',
                     }}>
                         <View style={{
@@ -91,22 +91,22 @@ export default function Header(props) {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 2,
-                            paddingVertical: 3,
-                            marginLeft: 7,
+                            paddingVertical: 4,
+                            marginLeft: 5,
                         }}>
                             <View style={{
-                                height: 35,
-                                width: 35,
+                                height: 45,
+                                width: 45,
                                 borderRadius: 25,
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
                                 <Image
-                                    source={images.shake}
+                                    source={images.profile}
                                     style={{
                                         width: '100%',
                                         height: '100%',
-                                        borderRadius: 40,
+                                        borderRadius: 50,
                                     }}
                                 />
                             </View>
@@ -132,17 +132,17 @@ export default function Header(props) {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 15, marginBottom: 0, }}>
+                    <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 18, marginBottom: 5, }}>
                         <Text style={{ ...FONTS.h4, color: COLORS.white }}>Saldo Do Mês Atual</Text>
                         <Text style={{ color: COLORS.white, ...FONTS.h1 }}>{util.numberFormat(transactions.totalReceipt() - transactions.totalExpenditure())}</Text>
                     </View>
                 </>
             )}
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 15, marginBottom: 15, }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 15, marginBottom: pageActive == 'balance' ? 25 : 15, }}>
                 {renderButton(pageActive == 'balance' ? 'Saldo' : 'Início', pageActive == 'balance' ? faDollarSign : faHome, 'balance')}
                 {renderButton('Categorias', faChartPie, 'categories')}
                 {renderButton('Histórico', faList, 'history')}
-                {renderButton('Fluxo De Caixa', faChartBar, 'DFC')}
+                {renderButton('Fluxo \nDe Caixa', faChartBar, 'DFC', 10.5)}
             </View>
         </View>
     )
