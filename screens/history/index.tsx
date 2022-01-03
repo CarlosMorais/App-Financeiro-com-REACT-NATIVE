@@ -54,7 +54,7 @@ export default function History(props) {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 {/* Title */}
                 <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>HISTÓRICO DE {new Date().getMonth() + 1}/{new Date().getFullYear()}</Text>
+                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>HISTÓRICO DE {util.monthInAcronyms(new Date().getMonth())} {new Date().getFullYear()}</Text>
                     <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Histórico de receitas e despesas</Text>
                 </View>
             </View>

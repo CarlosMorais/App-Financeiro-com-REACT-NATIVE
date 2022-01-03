@@ -21,7 +21,7 @@ export default function Balance(props) {
             <View style={{ flexDirection: 'row', }}>
                 {/* Title */}
                 <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>SALDO POR MÊS</Text>
+                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>SALDO DO MÊS</Text>
                     <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Resultado das Receitas e Despesas</Text>
                 </View>
             </View>
