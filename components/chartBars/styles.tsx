@@ -100,7 +100,7 @@ export const BoxBarRight = styled.View`
 
 export const RecipeBar = styled.View`
     background-color: blue;
-    height: ${props => props.percentRecept || 100}%;
+    height: ${props => props.percentReceipt || 100}%;
     width: ${props => props.percentWidth || 55}%;
     border-top-left-radius: ${props => props.barRadius || 15}px;
     border-top-right-radius: ${props => props.barRadius || 15}px;

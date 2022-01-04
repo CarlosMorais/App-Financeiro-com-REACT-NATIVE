@@ -1,18 +1,18 @@
-import React, { useRef } from "react";
-import { Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
-import { SIZES, theme } from '../../constants';
+import React from "react";
+import { View } from 'react-native';
+import { SIZES } from '../../constants';
 import Categories from "../../screens/categories";
 import Balance from "../../screens/balance";
 import DFC from "../../screens/DFC";
 import History from "../../screens/history";
 
 export default function BodyApp(props) {
-    const { pageActive } = props;
+    const { pageActive, balanceMonth } = props;
 
-    function renderBody(pageActive) {
+    function renderBody(pageActive, balanceMonth) {
         switch (pageActive) {
             case 'balance':
-                return <Balance/>;
+                return <Balance balanceMonth={balanceMonth} />;
             case 'categories':
                 return <Categories />;
             case 'DFC':
@@ -28,19 +28,17 @@ export default function BodyApp(props) {
         <View style={{
             flex: 1,
             paddingHorizontal: SIZES.padding,
-            // marginBottom: SIZES.borderRadiusBody + 15,
             marginBottom: 0,
-            backgroundColor: '#fff', 
-            marginTop: (SIZES.borderRadiusBody + 20) * -1 ,
+            backgroundColor: '#fff',
+            marginTop: (SIZES.borderRadiusBody + 20) * -1,
             borderTopLeftRadius: SIZES.borderRadiusBody,
             borderTopRightRadius: SIZES.borderRadiusBody,
-            flexDirection: 'column', 
+            flexDirection: 'column',
             width: '100%',
             display: "flex",
-            // padding: SIZES.padding, 
             padding: 20,
         }}>
-            {renderBody(pageActive)}
+            {renderBody(pageActive, balanceMonth)}
         </View>
     )
 }

@@ -1,6 +1,4 @@
-import {
-    cloth_icon,
-} from './icons';
+import { cloth_icon, } from './icons';
 import { COLORS } from "./theme";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCar, faUtensils, faUserGraduate, faHandHoldingHeart, faGlobe } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +8,7 @@ const pendingStatus = "P"
 
 function totalReceipt() {
     let total = 0;
-    receipt.map((item) => {
+    receiptList().map((item) => {
         total += item.total;
     })
 
@@ -36,45 +34,12 @@ function totalExpensesTheCategory(idCategory) {
     return total;
 }
 
-function DFC(month, year) {
+function balanceMonth() {
     return [
         {
-            recept: totalReceipt() + util.getRandomInt(0, 15000),
-            expense: totalExpenditure() + util.getRandomInt(0, 15000),
-            label: `${util.monthInAcronyms(month - 5 < 0 ? (month - 5 + 12) : month - 5).toUpperCase()}\n${month - 5 < 0 ? year - 1 : year}`,
-        }, {
-            recept: totalReceipt() + util.getRandomInt(0, 18000),
-            expense: totalExpenditure() + util.getRandomInt(0, 18000),
-            label: `${util.monthInAcronyms(month - 4 < 0 ? (month - 4 + 12) : month - 4).toUpperCase()}\n${month - 4 < 0 ? year - 1 : year}`,
-        }, {
-            recept: totalReceipt() + util.getRandomInt(0, 24000),
-            expense: totalExpenditure() + util.getRandomInt(0, 24000),
-            label: `${util.monthInAcronyms(month - 3 < 0 ? (month - 3 + 12) : month - 3).toUpperCase()}\n${month - 3 < 0 ? year - 1 : year}`,
-        },
-        {
-            recept: totalReceipt() + util.getRandomInt(0, 26000),
-            expense: totalExpenditure() + util.getRandomInt(0, 26000),
-            label: `${util.monthInAcronyms(month - 2 < 0 ? (month - 2 + 12) : month - 2).toUpperCase()}\n${month - 2 < 0 ? year - 1 : year}`,
-        },
-        {
-            recept: totalReceipt() + util.getRandomInt(20000, 28000),
-            expense: totalExpenditure() + util.getRandomInt(0, 25000),
-            label: `${util.monthInAcronyms(month - 1 < 0 ? (month - 1 + 12) : month - 1).toUpperCase()}\n${month - 1 < 0 ? year - 1 : year}`,
-        },
-        {
-            recept: totalReceipt() + util.getRandomInt(25555, 35000),
-            expense: totalExpenditure() + util.getRandomInt(15000, 25555),
-            label: `${util.monthInAcronyms(month).toUpperCase()}\n${year}`,
-        }
-    ]
-}
-
-function balanceMonth(month, year) {
-    return [
-        {
-            recept: totalReceipt(),
+            receipt: totalReceipt(),
             expense: totalExpenditure(),
-            label: `${util.monthInText(month).toUpperCase()} DE ${year}`,
+            label: `${util.monthInText(new Date().getMonth() + 1).toUpperCase()} DE ${new Date().getFullYear()}`,
         }
     ]
 }
@@ -88,52 +53,56 @@ function categoryName(idCategory) {
     return data.name;
 }
 
-export const categories = [
-    {
-        id: 1,
-        name: "Estudos",
-        icon: faUserGraduate,
-        color: COLORS.darkgreen,
-    },
-    {
-        id: 2,
-        name: "Alimentação",
-        icon: faUtensils,
-        color: COLORS.blue,
-    },
-    {
-        id: 3,
-        name: "Transporte",
-        icon: faCar,
-        color: COLORS.gold,
-    },
-    {
-        id: 4,
-        name: "Saúde e Bem Estar",
-        icon: faHandHoldingHeart,
-        color: COLORS.purple,
-    },
-    {
-        id: 5,
-        name: "Outros",
-        icon: faGlobe,
-        color: COLORS.red,
-    }
-];
+function DFC(month, year) {
+    return [
+        {
+            receipt: totalReceipt() + util.getRandomInt(0, 15000),
+            expense: totalExpenditure() + util.getRandomInt(0, 15000),
+            label: `${util.monthInAcronyms(month - 5 < 0 ? (month - 5 + 12) : month - 5).toUpperCase()}\n${month - 5 < 0 ? year - 1 : year}`,
+        }, {
+            receipt: totalReceipt() + util.getRandomInt(0, 18000),
+            expense: totalExpenditure() + util.getRandomInt(0, 18000),
+            label: `${util.monthInAcronyms(month - 4 < 0 ? (month - 4 + 12) : month - 4).toUpperCase()}\n${month - 4 < 0 ? year - 1 : year}`,
+        }, {
+            receipt: totalReceipt() + util.getRandomInt(0, 24000),
+            expense: totalExpenditure() + util.getRandomInt(0, 24000),
+            label: `${util.monthInAcronyms(month - 3 < 0 ? (month - 3 + 12) : month - 3).toUpperCase()}\n${month - 3 < 0 ? year - 1 : year}`,
+        },
+        {
+            receipt: totalReceipt() + util.getRandomInt(0, 26000),
+            expense: totalExpenditure() + util.getRandomInt(0, 26000),
+            label: `${util.monthInAcronyms(month - 2 < 0 ? (month - 2 + 12) : month - 2).toUpperCase()}\n${month - 2 < 0 ? year - 1 : year}`,
+        },
+        {
+            receipt: totalReceipt() + util.getRandomInt(20000, 28000),
+            expense: totalExpenditure() + util.getRandomInt(0, 25000),
+            label: `${util.monthInAcronyms(month - 1 < 0 ? (month - 1 + 12) : month - 1).toUpperCase()}\n${month - 1 < 0 ? year - 1 : year}`,
+        },
+        {
+            receipt: totalReceipt() + util.getRandomInt(25555, 35000),
+            expense: totalExpenditure() + util.getRandomInt(15000, 25555),
+            label: `${util.monthInAcronyms(month).toUpperCase()}\n${year}`,
+        }
+    ]
+}
 
-export const receipt = [
-    {
-        id: 1,
-        name: "Salário",
-        total: 9876.54,
-    },
-    {
-        id: 2,
-        name: "Venda De Livros",
-        total: 876.54,
-    }
-
-];
+function receiptList(){
+    return receipt = [
+        {
+            id: 1,
+            date: util.randomDate(-30),
+            name: "Salário",
+            total: util.getRandomInt(10000, 20000) * 0.95,
+        },
+        {
+            id: 2,
+            date: util.randomDate(-30),
+            name: "Venda De Livros",
+            total: util.getRandomInt(500, 876.54) * 1,
+        }
+    
+    ];
+}
 
 function expensesList() {
     const expenses = [
@@ -341,9 +310,43 @@ function expensesList() {
     return expenses.sort((a, b) => new Date(a.date) < new Date(b.date));
 }
 
+const categories = [
+    {
+        id: 1,
+        name: "Estudos",
+        icon: faUserGraduate,
+        color: COLORS.darkgreen,
+    },
+    {
+        id: 2,
+        name: "Alimentação",
+        icon: faUtensils,
+        color: COLORS.blue,
+    },
+    {
+        id: 3,
+        name: "Transporte",
+        icon: faCar,
+        color: COLORS.gold,
+    },
+    {
+        id: 4,
+        name: "Saúde e Bem Estar",
+        icon: faHandHoldingHeart,
+        color: COLORS.purple,
+    },
+    {
+        id: 5,
+        name: "Outros",
+        icon: faGlobe,
+        color: COLORS.red,
+    }
+];
+
+
 export default {
-    receipt,
     categories,
+    receiptList,
     expensesList,
     dataCategory,
     categoryName,

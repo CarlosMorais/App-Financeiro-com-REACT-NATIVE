@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
-import { Container, WidgetBalance, BalanceNavigationButton, Top, BoxBars, BoxWidget, BoxBarsInner, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeBar, RecipeLabel, BoxLegend, BoxLegendChild, ExpenseLabel, ExpenseBar, Footer, FooterInner, LegendColor, LegendText, BoxFooterLabels, BoxFooterLabelText, FooterLeft, FooterRight } from "./styles";
-import { Text, View, TouchableOpacity, Image, Dimensions, Platform } from 'react-native';
-import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
+import React from "react";
+import { Container, WidgetBalance, BalanceNavigationButton, Top, BoxBars, BoxWidget, BoxBarsInner, BoxBarsChild, BoxBarLeft, BoxBarRight, RecipeBar, RecipeLabel, BoxLegend, BoxLegendChild, ExpenseLabel, ExpenseBar, Footer, FooterInner, LegendColor, LegendText, BoxFooterLabels, BoxFooterLabelText, } from "./styles";
+import { Text, View, Platform } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faChevronRight, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import util from '../../util';
@@ -18,12 +17,12 @@ export default function ChartBars(props) {
             return false;
     }
 
-    function getBalance(data){
+    function getBalance(data) {
         let totalReceipt = 0;
         let totalExpense = 0;
 
-        data && data.length && data.map((item)=>{
-            totalReceipt += item.recept;
+        data && data.length && data.map((item) => {
+            totalReceipt += item.receipt;
             totalExpense += item.expense;
         })
 
@@ -35,8 +34,8 @@ export default function ChartBars(props) {
         function getBigger(data) {
             let valueBigger = 0;
             data.map((item, index) => {
-                if (item.recept > valueBigger)
-                    valueBigger = item.recept;
+                if (item.receipt > valueBigger)
+                    valueBigger = item.receipt;
                 if (item.expense > valueBigger)
                     valueBigger = item.expense;
             })
@@ -118,14 +117,14 @@ export default function ChartBars(props) {
         if (data && data.length) {
             return data.map((item, index) => {
                 const valueBigger = getBigger(data);
-                let recept = util.clearNumber(item.recept).toFixed(2);
+                let receipt = util.clearNumber(item.receipt).toFixed(2);
                 let expense = util.clearNumber(item.expense).toFixed(2);
 
-                let percentRecept = recept >= valueBigger ? 100 : ((recept / valueBigger) * 100).toFixed(2);
+                let percentReceipt = receipt >= valueBigger ? 100 : ((receipt / valueBigger) * 100).toFixed(2);
                 let percentExpense = expense >= valueBigger ? 100 : ((expense / valueBigger) * 100).toFixed(2);
 
-                if (recept == 0)
-                    percentRecept = 0.8;
+                if (receipt == 0)
+                    percentReceipt = 0.8;
                 if (expense == 0)
                     percentExpense = 0.8;
 
@@ -141,8 +140,8 @@ export default function ChartBars(props) {
                         {!isFooter && (
                             <>
                                 <BoxBarLeft spaceBetweenBars={spaceBetweenBars(data)}>
-                                    <RecipeLabel isVertical={isVertical(data)} labelFontSize={labelFontSize(data)}>{handleNumber(util.numberFormat(recept), data)}</RecipeLabel>
-                                    <RecipeBar isVertical={isVertical(data)} percentRecept={percentRecept} barRadius={barRadius(data)} percentWidth={percentWidth(data)} />
+                                    <RecipeLabel isVertical={isVertical(data)} labelFontSize={labelFontSize(data)}>{handleNumber(util.numberFormat(receipt), data)}</RecipeLabel>
+                                    <RecipeBar isVertical={isVertical(data)} percentReceipt={percentReceipt} barRadius={barRadius(data)} percentWidth={percentWidth(data)} />
                                 </BoxBarLeft>
                             </>
                         )}
@@ -181,37 +180,55 @@ export default function ChartBars(props) {
         )
     }
 
+    function renderLegend() {
+        return (
+            <BoxLegend>
+                <BoxLegendChild isVertical={isVertical(data)}>
+                    <LegendColor legendColor={'blue'} />
+                    <LegendText marginRight={5}>Receitas</LegendText>
+                </BoxLegendChild>
+                <BoxLegendChild isVertical={isVertical(data)}>
+                    <LegendColor legendColor={'red'} />
+                    <LegendText>Despesas</LegendText>
+                </BoxLegendChild>
+            </BoxLegend>
+        )
+    }
+
+    function renderBoxBars() {
+        return (
+            <BoxBarsInner isVertical={isVertical(data)}>
+                {renderBars(data)}
+            </BoxBarsInner>
+        )
+    }
+
+    function renderFooter() {
+        return (
+            <FooterInner isVertical={isVertical(data)}>
+                <BoxFooterLabels>
+                    {renderBars(data, true)}
+                </BoxFooterLabels>
+                <BoxWidget>
+                    {renderNavigationButton(faChevronLeft)}
+                    {renderBalance(util.numberFormat(getBalance(data)), data)}
+                    {renderNavigationButton(faChevronRight, false)}
+                </BoxWidget>
+            </FooterInner>
+        )
+    }
+
 
     return (
         <Container style={{ marginBottom: Platform.OS == 'ios' ? 25 : 0 }}>
             <Top>
-                <BoxLegend>
-                    <BoxLegendChild isVertical={isVertical(data)}>
-                        <LegendColor legendColor={'blue'} />
-                        <LegendText marginRight={5}>Receitas</LegendText>
-                    </BoxLegendChild>
-                    <BoxLegendChild isVertical={isVertical(data)}>
-                        <LegendColor legendColor={'red'} />
-                        <LegendText>Despesas</LegendText>
-                    </BoxLegendChild>
-                </BoxLegend>
+                {renderLegend()}
             </Top>
             <BoxBars>
-                <BoxBarsInner isVertical={isVertical(data)}>
-                    {renderBars(data)}
-                </BoxBarsInner>
+                {renderBoxBars()}
             </BoxBars>
             <Footer>
-                <FooterInner isVertical={isVertical(data)}>
-                    <BoxFooterLabels>
-                        {renderBars(data, true)}
-                    </BoxFooterLabels>
-                    <BoxWidget>
-                        {renderNavigationButton(faChevronLeft)}
-                        {renderBalance(util.numberFormat(getBalance(data)), data)}
-                        {renderNavigationButton(faChevronRight, false)}
-                    </BoxWidget>
-                </FooterInner>
+                {renderFooter()}
             </Footer>
         </Container>
     )

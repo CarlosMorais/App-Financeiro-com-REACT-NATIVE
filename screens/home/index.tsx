@@ -19,7 +19,8 @@ import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../..
 
 const Home = () => {
     // dummy data
-    const [pageActive, setPageActive] = React.useState('balance')
+    const [pageActive, setPageActive] = React.useState('balance');
+    const [balanceMonth, setBalanceMonth] = React.useState(transactions.balanceMonth());
 
     return (
 
@@ -52,11 +53,13 @@ const Home = () => {
                         <Header
                             pageActive={pageActive}
                             setPageActive={setPageActive}
+                            balanceMonth={balanceMonth}
                         />
 
                         {/* BodyApp Section */}
                         <BodyApp
                             pageActive={pageActive}
+                            balanceMonth={balanceMonth}
                         />
                     </View>
 

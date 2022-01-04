@@ -8,6 +8,7 @@ import util from '../../util';
 import ChartBars from "../../components/chartBars";
 
 export default function Balance(props) {
+    const { balanceMonth } = props;
     const [month, setMonth] = useState(new Date().getMonth());
     const [year, setYear] = useState(new Date().getFullYear());
 
@@ -27,7 +28,7 @@ export default function Balance(props) {
             </View>
             <View style={{ flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20 }}>
                 <ChartBars
-                    data={transactions.balanceMonth(month, year)}
+                    data={balanceMonth}
                     handleNext={() => {
                         if (`${year}${month}` < `${new Date().getFullYear()}${new Date().getMonth()}`) {
                             setYear(month == 11 ? year + 1 : year);
