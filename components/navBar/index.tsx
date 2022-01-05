@@ -1,9 +1,6 @@
-import React, { useRef } from "react";
-import { Text, View, TouchableOpacity, Image, Dimensions} from 'react-native';
-import { styles, COLORS, FONTS, SIZES, icons, images, categories } from '../../constants';
-import { faBell, faDollarSign, faChartPie, faChartBar, faList } from '@fortawesome/free-solid-svg-icons'
-
-
+import React from "react";
+import { View, TouchableOpacity, Image} from 'react-native';
+import { COLORS, SIZES, icons } from '../../constants';
 
 export default function renderNavBar() {
     return (

@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronRight, faEye, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import util from "../../util";
 import LightButton from '../../components/Buttons/LightButton';
+import HeaderPage from "../../components/HeaderPage";
 
 export default function History(props) {
     const [limit, setLimit] = useState(15);
@@ -51,22 +52,14 @@ export default function History(props) {
     }
     return (
         <View style={{ flexDirection: 'column' }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                {/* Title */}
-                <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>HISTÓRICO DE {util.monthInAcronyms(new Date().getMonth())} {new Date().getFullYear()}</Text>
-                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Histórico de receitas e despesas</Text>
-                </View>
-            </View>
+            <HeaderPage
+                title={`HISTÓRICO DE ${util.monthInAcronyms(new Date().getMonth())} ${new Date().getFullYear()}`}
+                subtitle={`Histórico de receitas e despesas`}
+            />
             <View style={{ flexDirection: 'column', marginTop: 25, marginLeft: -30, marginRight: -30 }}>
                 {renderList(transactions.expensesList())}
             </View>
-            <View style={{
-                marginLeft: -5,
-                marginRight: -5,
-                marginTop: 30,
-                marginBottom: 70,
-            }}>
+            <View style={{ marginLeft: -5, marginRight: -5, marginTop: 30, marginBottom: 70, }}>
                 <LightButton icon={faEye} label={'VER MAIS'} onPress={() => { setLimit(limit + 15) }} />
             </View>
         </View >

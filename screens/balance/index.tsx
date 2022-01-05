@@ -1,31 +1,25 @@
-import React, { useRef, useState } from "react";
-import { Container } from "./styles";
-import { Text, View, TouchableOpacity, Image, Animated, Platform } from 'react-native';
-import { VictoryPie } from 'victory-native';
-import { Svg } from 'react-native-svg';
-import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
-import util from '../../util';
+import React, { useEffect, useState } from "react";
+import { Container, } from "./styles";
+import { Text, View, } from 'react-native';
+import { transactions } from '../../constants';
 import ChartBars from "../../components/chartBars";
-
+import HeaderPage from "../../components/HeaderPage";
+ 
 export default function Balance(props) {
-    const { balanceMonth } = props;
+    const { balanceMonth, setBalanceMonth } = props;
     const [month, setMonth] = useState(new Date().getMonth());
     const [year, setYear] = useState(new Date().getFullYear());
 
+    useEffect(() => {
+        setBalanceMonth(transactions.balanceMonth())
+    }, [month])
+
     return (
-        <View style={{
-            flexDirection: 'column',
-            display: 'flex',
-            justifyContent: 'flex-start',
-            height: '100%',
-        }}>
-            <View style={{ flexDirection: 'row', }}>
-                {/* Title */}
-                <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>SALDO DO MÊS</Text>
-                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Resultado das Receitas e Despesas</Text>
-                </View>
-            </View>
+        <Container>
+            <HeaderPage
+                title={'SALDO DO MÊS'}
+                subtitle={'Resultado das Receitas e Despesas'}
+            />
             <View style={{ flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20 }}>
                 <ChartBars
                     data={balanceMonth}
@@ -41,7 +35,7 @@ export default function Balance(props) {
                     }}
                 />
             </View>
-        </View>
+        </Container>
 
     )
 }

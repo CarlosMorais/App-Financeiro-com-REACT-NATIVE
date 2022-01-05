@@ -6,6 +6,7 @@ import { Svg } from 'react-native-svg';
 import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
 import util from '../../util';
 import ChartBars from "../../components/chartBars";
+import HeaderPage from "../../components/HeaderPage";
 
 export default function DFC(props) {
     const [month, setMonth] = useState(new Date().getMonth());
@@ -18,13 +19,10 @@ export default function DFC(props) {
             justifyContent: 'flex-start',
             height: '100%',
         }}>
-            <View style={{ flexDirection: 'row', }}>
-                {/* Title */}
-                <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>DFC - FLUXO DE CAIXA</Text>
-                    <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>Relatório de Demonstrativo de Fluxo de Caixa</Text>
-                </View>
-            </View>
+            <HeaderPage
+                title={`DFC - FLUXO DE CAIXA`}
+                subtitle={`Relatório de Demonstrativo de Fluxo de Caixa`}
+            />
             <View style={{ flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20 }}>
                 <ChartBars
                     data={transactions.DFC(month, year)}

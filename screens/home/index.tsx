@@ -60,6 +60,7 @@ const Home = () => {
                         <BodyApp
                             pageActive={pageActive}
                             balanceMonth={balanceMonth}
+                            setBalanceMonth={setBalanceMonth}
                         />
                     </View>
 

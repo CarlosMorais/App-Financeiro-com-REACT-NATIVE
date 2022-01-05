@@ -7,12 +7,12 @@ import DFC from "../../screens/DFC";
 import History from "../../screens/history";
 
 export default function BodyApp(props) {
-    const { pageActive, balanceMonth } = props;
+    const { pageActive, balanceMonth, setBalanceMonth } = props;
 
-    function renderBody(pageActive, balanceMonth) {
+    function renderBody(pageActive) {
         switch (pageActive) {
             case 'balance':
-                return <Balance balanceMonth={balanceMonth} />;
+                return <Balance balanceMonth={balanceMonth} setBalanceMonth={setBalanceMonth}/>;
             case 'categories':
                 return <Categories />;
             case 'DFC':
@@ -38,7 +38,7 @@ export default function BodyApp(props) {
             display: "flex",
             padding: 20,
         }}>
-            {renderBody(pageActive, balanceMonth)}
+            {renderBody(pageActive)}
         </View>
     )
 }
