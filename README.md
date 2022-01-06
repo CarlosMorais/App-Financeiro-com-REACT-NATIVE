@@ -1,6 +1,6 @@
 # Aplicativo IOS & Android com REACT NATIVE
 
-## [Telas]
+## Telas
 ![alt text](assets/screenshot/1.jpeg)
 ![alt text](assets/screenshot/2.jpeg)
 ![alt text](assets/screenshot/3.jpeg)
