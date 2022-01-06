@@ -1,8 +1,8 @@
-# Nome do App
+# Aplicativo IOS & Android com REACT NATIVE
 
-## [Watch it on YouTube](https://youtu.be/)
-
-xxxxx
-
-
-
+## [Telas]
+![alt text](assets/screenshot/1.png)
+![alt text](assets/screenshot/2.png)
+![alt text](assets/screenshot/3.jpg)
+![alt text](assets/screenshot/4.jpg)
+![alt text](assets/screenshot/5.jpg)
