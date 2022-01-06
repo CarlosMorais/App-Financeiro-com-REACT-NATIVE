@@ -1,11 +1,9 @@
-import React, { useRef, useState } from "react";
-import { Container, Row, Column1, ColumnDescription, ColumnButton, RowPrice, BoxIcon, BoxData, DataMonth, DataDayWeek, DataDay } from "./styles";
-import { Text, View, TouchableOpacity, Image, Animated, Platform } from 'react-native';
-import { VictoryPie } from 'victory-native';
-import { Svg } from 'react-native-svg';
-import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
+import React, { useState } from "react";
+import { Container, Row, Column1, ColumnDescription, ColumnButton, RowPrice, BoxIcon, BoxData, DataMonth, DataDay } from "./styles";
+import { Text, View, TouchableOpacity, } from 'react-native';
+import { transactions } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faChevronRight, faEye, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faEye } from '@fortawesome/free-solid-svg-icons'
 import util from "../../util";
 import LightButton from '../../components/Buttons/LightButton';
 import HeaderPage from "../../components/HeaderPage";
@@ -51,7 +49,7 @@ export default function History(props) {
         return list;
     }
     return (
-        <View style={{ flexDirection: 'column' }}>
+        <Container>
             <HeaderPage
                 title={`HISTÓRICO DE ${util.monthInAcronyms(new Date().getMonth())} ${new Date().getFullYear()}`}
                 subtitle={`Histórico de receitas e despesas`}
@@ -62,7 +60,6 @@ export default function History(props) {
             <View style={{ marginLeft: -5, marginRight: -5, marginTop: 30, marginBottom: 70, }}>
                 <LightButton icon={faEye} label={'VER MAIS'} onPress={() => { setLimit(limit + 15) }} />
             </View>
-        </View >
-
+        </Container>
     )
 }

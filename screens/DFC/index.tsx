@@ -1,10 +1,6 @@
-import React, { useRef, useState } from "react";
-import { Container } from "./styles";
-import { Text, View, TouchableOpacity, Image, Animated, Platform } from 'react-native';
-import { VictoryPie } from 'victory-native';
-import { Svg } from 'react-native-svg';
-import { styles, COLORS, FONTS, SIZES, icons, images, transactions } from '../../constants';
-import util from '../../util';
+import React, { useState } from "react";
+import { Container, BoxChart } from "./styles";
+import { transactions } from '../../constants';
 import ChartBars from "../../components/chartBars";
 import HeaderPage from "../../components/HeaderPage";
 
@@ -13,17 +9,12 @@ export default function DFC(props) {
     const [year, setYear] = useState(new Date().getFullYear());
 
     return (
-        <View style={{
-            flexDirection: 'column',
-            display: 'flex',
-            justifyContent: 'flex-start',
-            height: '100%',
-        }}>
+        <Container>
             <HeaderPage
                 title={`DFC - FLUXO DE CAIXA`}
                 subtitle={`Relatório de Demonstrativo de Fluxo de Caixa`}
             />
-            <View style={{ flex: 1, padding: 3, flexDirection: 'column', marginLeft: -20, marginRight: -20 }}>
+            <BoxChart>
                 <ChartBars
                     data={transactions.DFC(month, year)}
                     handleNext={() => {
@@ -37,8 +28,7 @@ export default function DFC(props) {
                         setMonth(month == 0 ? 11 : month - 1)
                     }}
                 />
-            </View>
-        </View>
-
+            </BoxChart>
+        </Container>
     )
 }

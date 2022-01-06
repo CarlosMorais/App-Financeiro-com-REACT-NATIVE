@@ -137,8 +137,6 @@ const getCurrentDate = (isBR = true) => {
   var month = new Date().getMonth() + 1;
   var year = new Date().getFullYear();
 
-  //Alert.alert(date + '-' + month + '-' + year);
-  // You can turn it in to your desired format
   return isBR ? (day < 10 ? `0${day}` : day) + '/' + (month < 10 ? `0${month}` : month) + '/' + year : year + '-' + (month < 10 ? `0${month}` : month) + '-' + (day < 10 ? `0${day}` : day);//format: dd-mm-yyyy;
 }
 
@@ -157,16 +155,6 @@ function randomDate(days = 1) {
     month = `0${parseInt(month)}`;
 
   var newDate = `${year}-${month}-${day}`;
-  // console.log(`
-  // \n\n#####
-  // randomDate(${days})
-  // randomNumber: ${randomNumber}
-  // date: ${date}
-  // day: ${day}
-  // month: ${month}
-  // year: ${year}
-  // newDate: ${newDate}
-  // `)
 
   return newDate;
 }
